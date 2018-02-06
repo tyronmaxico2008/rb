@@ -54,6 +54,13 @@ namespace Whirlpool_logistics.Controllers
             return Content(sResult, "application/json");
         }
 
+        [HttpPost]
+        public ActionResult getIndexFieldList()
+        {
+            DataTable t = getData("select * from IndexFields where subtagid = " + Request.Form["subtagid"]);
+            string sResult = Newtonsoft.Json.JsonConvert.SerializeObject(t);
+            return Content(sResult, "application/json");
+        }
 
     }
 }
