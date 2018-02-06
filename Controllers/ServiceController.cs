@@ -15,30 +15,44 @@ namespace Whirlpool_logistics.Controllers
     {
         //
         // GET: /Service/
-        private string sConnectionString = "Data Source=.;initial Catalog=whirlpool_logistics;user id=sa;password=writer#2015";
-        public ActionResult Index()
+        public string getConnectionString()
         {
-            return View();
+            return ConfigurationManager.ConnectionStrings["SqlServerConnString"].ConnectionString;
         }
 
-        public ActionResult getMantagList()
+        public DataTable getData(string sql)
         {
-            SqlDataAdapter ad = new SqlDataAdapter("select * from Maintag", sConnectionString);
+
+            SqlDataAdapter ad = new SqlDataAdapter(sql, getConnectionString());
 
             DataTable t = new DataTable();
 
 
             ad.Fill(t);
 
-            string sResult = Newtonsoft.Json.JsonConvert.SerializeObject(t);
-
-            //System.Threading.Thread.Sleep(3000);
-
-            return Content(sResult, "application/json");
-
+            return t;
 
         }
-        
+
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        public ActionResult getMaintagList()
+        {
+            DataTable t = getData("select * from Maintag ");
+            string sResult = Newtonsoft.Json.JsonConvert.SerializeObject(t);
+            return Content(sResult, "application/json");
+        }
+
+        [HttpPost]
+        public ActionResult getSubTagList()
+        {
+            DataTable t = getData("select * from subtag where maintagid = " + Request.Form["maintagid"]);
+            string sResult = Newtonsoft.Json.JsonConvert.SerializeObject(t);
+            return Content(sResult, "application/json");
+        }
 
 
     }
