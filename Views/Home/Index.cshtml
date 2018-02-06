@@ -10,6 +10,7 @@
 <div class="col-lg-12" ng-app="myApp" ng-controller="tagging">
 
     <div class="col-lg-3 col-md-3" style="border: 1px solid #0094ff; border-radius: 5px; padding: 5px; float: left">
+        @*<input type="file" id="filepath" class="form-control"/>*@
         <label class="">Control Number</label><br />
         <input id="controlnum" class="form-control-md" type="text" />
         <button id="getimg" class="btn btn-dark col-md-4">Get</button>
@@ -20,14 +21,19 @@
         </select>
         <br />
         <label class="col-md-4">Sub Tag</label>
-        <select id="subtag" class="form-control-md col-md-7"  ng-model="row.subTag_id" ng-options="r.subtagid as  r.subtagval for r in drp_subtag" >
+        <select id="subtag" class="form-control-md col-md-7"  ng-model="row.subTag_id" ng-change="loadIndexfield()" ng-options="r.subtagid as  r.subtagval for r in drp_subtag" >
             <option value="">--Select--</option>
         </select>
         <br />
         <hr />
         <label class="col-md-12">Index Fields</label>
         <hr />
-        <div id="divresult"></div>
+        <table>
+            <tr ng-repeat="r in indexfield">
+                <td ng-bind="r.indexval"></td>
+                <td><input type="text" /></td>
+            </tr>
+        </table>
 
     </div>
 
