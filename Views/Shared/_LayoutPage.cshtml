@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>@ViewBag.Title</title>
+
+    <script src="~/Scripts/jquery.js"></script>
+    <script src="~/Scripts/angular.min.1.6.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+    
+    <link href="~/css/Style.css" rel="stylesheet" />
+
+</head>
+<body class="fluid-container">
+    <header>
+       
+    </header>
+    <div class="col-md-12">
+        @RenderBody()
+    </div>
+    <footer class="footer">
+        &copy; Writer Corporation @DateTime.Now.Year
+    </footer>
+</body>
+</html>
