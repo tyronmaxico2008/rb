@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Whirlpool_logistics.Models;
 
 namespace Whirlpool_logistics.Controllers
 {
@@ -21,10 +25,8 @@ namespace Whirlpool_logistics.Controllers
         }
 
 
-        public FileStreamResult GetPdf()
-        {
-            return new FileStreamResult(Response.OutputStream, "application/pdf") { FileDownloadName = "download.pdf" };
-        }
+        
+
         
 
     }

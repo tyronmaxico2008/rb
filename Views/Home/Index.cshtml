@@ -9,7 +9,7 @@
 
 <div class="col-lg-12" ng-app="myApp" ng-controller="tagging">
 
-    <div class="col-lg-3 col-md-3" style="border: 1px solid #0094ff; border-radius: 5px; padding: 5px; float: left">
+    <div class="col-lg-4 col-md-4" style="border: 1px solid #0094ff; border-radius: 5px; padding: 5px; float: left">
         @*<input type="file" id="filepath" class="form-control"/>*@
         <label class="">Control Number</label><br />
         <input id="controlnum" class="form-control-md" type="text" />
@@ -30,14 +30,15 @@
         <hr />
         <table>
             <tr ng-repeat="r in indexfield">
-                <td ng-bind="r.indexval"></td>
-                <td><input type="text" /></td>
+                <td ng-bind="r.indexval" class="col-md-6"></td>
+                <td class="col-md-6"><input type="text" /></td>
             </tr>
+            <tr><td></td><td  class="col-md-6"><button class="btn btn-success" ng-show="showsave" ng-click="">Save</button></td></tr>
         </table>
 
     </div>
 
-    <div class="col-lg-9 col-md-9" style="border: 1px solid #0094ff; border-radius: 5px; padding: 5px; float: left">
+    <div class="col-lg-8 col-md-8" style="border: 1px solid #0094ff; border-radius: 5px; padding: 5px; float: left">
         <iframe id="viewer" src=""></iframe>
     </div>
 </div>
