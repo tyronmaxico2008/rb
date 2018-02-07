@@ -3,29 +3,25 @@
     Layout = "~/Views/Shared/_LayoutPage.cshtml";
 }
 <link href="~/css/signin.css" rel="stylesheet" />
-<script>
-    $(document).ready(function(){
-        $("#signin").click(function () {
-            alert("");
-            window.location("/home/index");
-        });
-    });
-</script>
+@section  headerContent {
+    <script src="~/Scripts/test.js"></script>
+}
+
 
 <body class="text-center">
-    <form class="form-signin">
+    <div class="form-signin" ng-app="myApp" ng-controller="login">
         <img class="mb-4 img-fluid" src="/Images/writer-home-logo.png" alt="" width="200">
         <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
         <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+        <input type="text" id="inputEmail" ng-model="username" class="form-control" placeholder="Username" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <input type="password" id="inputPassword" ng-model="password" class="form-control" placeholder="Password" required>
         <div class="checkbox mb-3">
             <label>
                 <input type="checkbox" value="remember-me"> Remember me
             </label>
         </div>
-        <button id="signin" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <button id="signin" class="btn btn-lg btn-primary btn-block" type="submit" ng-click="signin()">Sign in</button>
         <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
-    </form>
+    </div>
 </body>
