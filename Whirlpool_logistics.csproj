@@ -39,6 +39,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="itextsharp">
+      <HintPath>..\..\..\commonlib\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -108,6 +111,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="bll\clsPDF.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ServiceController.cs" />
     <Compile Include="Global.asax.cs">
@@ -123,6 +127,22 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="assets\bootstrap3\css\bootstrap-theme.css" />
+    <Content Include="assets\bootstrap3\css\bootstrap-theme.min.css" />
+    <Content Include="assets\bootstrap3\css\bootstrap.css" />
+    <Content Include="assets\bootstrap3\css\bootstrap.min.css" />
+    <Content Include="assets\bootstrap3\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="assets\bootstrap3\js\bootstrap.js" />
+    <Content Include="assets\bootstrap3\js\bootstrap.min.js" />
+    <Content Include="assets\bootstrap3\js\npm.js" />
+    <Content Include="assets\font-awesome\css\font-awesome.css" />
+    <Content Include="assets\font-awesome\css\font-awesome.min.css" />
+    <Content Include="assets\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="assets\mypdf\pdfViewer.html" />
+    <Content Include="assets\pdfjs\pdf.js" />
+    <Content Include="assets\pdfjs\pdf.worker.js" />
+    <Content Include="assets\mypdf\pdfViewer.css" />
+    <Content Include="assets\mypdf\pdfViewer.js" />
     <Content Include="bin\Microsoft.Web.Infrastructure.dll" />
     <Content Include="bin\Microsoft.Web.Mvc.FixedDisplayModes.dll" />
     <Content Include="bin\Newtonsoft.Json.dll" />
@@ -148,6 +168,8 @@
     <Content Include="Scripts\angular.min.1.6.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery.js" />
+    <Content Include="Scripts\login.js" />
+    <Content Include="Scripts\ngInit.js" />
     <Content Include="Scripts\test.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -186,6 +208,48 @@
     <Content Include="obj\Debug\build.force" />
     <Content Include="obj\Debug\DesignTimeResolveAssemblyReferences.cache" />
     <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="assets\bootstrap3\css\bootstrap-theme.css.map" />
+    <Content Include="assets\bootstrap3\css\bootstrap-theme.min.css.map" />
+    <Content Include="assets\bootstrap3\css\bootstrap.css.map" />
+    <Content Include="assets\bootstrap3\css\bootstrap.min.css.map" />
+    <Content Include="assets\bootstrap3\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="assets\bootstrap3\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="assets\bootstrap3\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="assets\bootstrap3\fonts\glyphicons-halflings-regular.woff2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="assets\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="assets\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="assets\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="assets\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="assets\font-awesome\less\bordered-pulled.less" />
+    <Content Include="assets\font-awesome\less\core.less" />
+    <Content Include="assets\font-awesome\less\fixed-width.less" />
+    <Content Include="assets\font-awesome\less\font-awesome.less" />
+    <Content Include="assets\font-awesome\less\icons.less" />
+    <Content Include="assets\font-awesome\less\larger.less" />
+    <Content Include="assets\font-awesome\less\list.less" />
+    <Content Include="assets\font-awesome\less\mixins.less" />
+    <Content Include="assets\font-awesome\less\path.less" />
+    <Content Include="assets\font-awesome\less\rotated-flipped.less" />
+    <Content Include="assets\font-awesome\less\spinning.less" />
+    <Content Include="assets\font-awesome\less\stacked.less" />
+    <Content Include="assets\font-awesome\less\variables.less" />
+    <Content Include="assets\font-awesome\scss\font-awesome.scss" />
+    <Content Include="assets\font-awesome\scss\_bordered-pulled.scss" />
+    <Content Include="assets\font-awesome\scss\_core.scss" />
+    <Content Include="assets\font-awesome\scss\_fixed-width.scss" />
+    <Content Include="assets\font-awesome\scss\_icons.scss" />
+    <Content Include="assets\font-awesome\scss\_larger.scss" />
+    <Content Include="assets\font-awesome\scss\_list.scss" />
+    <Content Include="assets\font-awesome\scss\_mixins.scss" />
+    <Content Include="assets\font-awesome\scss\_path.scss" />
+    <Content Include="assets\font-awesome\scss\_rotated-flipped.scss" />
+    <Content Include="assets\font-awesome\scss\_spinning.scss" />
+    <Content Include="assets\font-awesome\scss\_stacked.scss" />
+    <Content Include="assets\font-awesome\scss\_variables.scss" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

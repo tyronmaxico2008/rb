@@ -8,22 +8,74 @@
 
     <script src="~/Scripts/jquery.js"></script>
     <script src="~/Scripts/angular.min.1.6.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
-    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
-    
-    <link href="~/css/Style.css" rel="stylesheet" />
+    <script src="~/Assets/bootstrap3/js/bootstrap.min.js"></script>
+    <link href="~/Assets/bootstrap3/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
 
-    @RenderSection("headerContent",false)
+    <link href="~/css/Style.css" rel="stylesheet" />
+    <script src="~/Scripts/ngInit.js"></script>
+    @RenderSection("headerContent", false)
 </head>
-<body class="fluid-container">
-    <header>
-       
-    </header>
-    <div class="col-md-12">
+<body>
+
+    <div class="container-fluid">
+
+        <nav class="navbar navbar-default navbar-static-top ">
+            <div class="navbar-header">
+                <a href="../System/Dashboard">
+                    <img class="img img-thumbnail" src="/Images/writer-home-logo.png" id="imgLogo" style="margin: 2px; height: 45px" />
+                </a>
+            </div>
+            <div class="nav navbar-right">
+                <ul class="nav navbar-nav">
+
+                    <li class="dropdown">
+
+
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-gear"></i>&nbsp;Hi, <span ng-bind="@Session["username"]">@Session["username"]</span><span class="caret"></span>
+                        </a>
+
+
+                        <ul class="dropdown-menu">
+                           @* <li><a href="#"><i class="fa fa-edit"></i>&nbsp;Edit Profile</a></li>
+                            <li class="divider"></li>*@
+                            <li><a href="../System/Login2"><i class="fa fa-sign-out"></i>&nbsp;Log Out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-file-pdf-o"></i>&nbsp;Tagging <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../Home/Index"><i class="fa fa-file-excel-o"></i>&nbsp;Tag Document</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-file-pdf-o"></i>&nbsp;Report <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#"><i class="fa fa-file-excel-o"></i>&nbsp;Tag Report</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+
+
+            </div>
+        </nav>
+
         @RenderBody()
+
     </div>
-    <footer class="footer">
+   
+
+    <!-- <footer class="footer">
         &copy; Writer Corporation @DateTime.Now.Year
     </footer>
+       -->
 </body>
 </html>

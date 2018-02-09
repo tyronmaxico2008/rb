@@ -1,11 +1,19 @@
 ﻿@{
     ViewBag.Title = "Login";
-    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+    //Layout = "~/Views/Shared/_LayoutPage.cshtml";
 }
-<link href="~/css/signin.css" rel="stylesheet" />
-@section  headerContent {
-    <script src="~/Scripts/test.js"></script>
-}
+<html>
+<head>
+    <link href="~/css/signin.css" rel="stylesheet" />
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/angular.min.1.6.js"></script>
+
+
+    <script src="~/Scripts/ngInit.js"></script>
+    <script src="~/Scripts/login.js"></script>
+</head>
 
 
 <body class="text-center">
@@ -16,12 +24,13 @@
         <input type="text" id="inputEmail" ng-model="username" class="form-control" placeholder="Username" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" ng-model="password" class="form-control" placeholder="Password" required>
-        <div class="checkbox mb-3">
+        @*<div class="checkbox mb-3">
             <label>
                 <input type="checkbox" value="remember-me"> Remember me
             </label>
-        </div>
+        </div>*@
         <button id="signin" class="btn btn-lg btn-primary btn-block" type="submit" ng-click="signin()">Sign in</button>
         <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
     </div>
 </body>
+</html>
