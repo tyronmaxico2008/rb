@@ -10,7 +10,7 @@ using Whirlpool_logistics.Models;
 
 namespace Whirlpool_logistics.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : myBaseController
     {
         //
         // GET: /Home/
