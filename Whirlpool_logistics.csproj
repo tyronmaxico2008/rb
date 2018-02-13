@@ -129,6 +129,7 @@
   <ItemGroup>
     <Compile Include="bll\clsPDF.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\myBaseController.cs" />
     <Compile Include="Controllers\ServiceController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

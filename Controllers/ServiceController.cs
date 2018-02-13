@@ -12,28 +12,11 @@ using Whirlpool_logistics.Models;
 
 namespace Whirlpool_logistics.Controllers
 {
-    public class ServiceController : Controller
+    public class ServiceController : myBaseController
     {
         //
         // GET: /Service/
-        public string getConnectionString()
-        {
-            return ConfigurationManager.ConnectionStrings["SqlServerConnString"].ConnectionString;
-        }
-
-        public DataTable getData(string sql)
-        {
-
-            SqlDataAdapter ad = new SqlDataAdapter(sql, getConnectionString());
-
-            DataTable t = new DataTable();
-
-
-            ad.Fill(t);
-
-            return t;
-
-        }
+        
 
         public ActionResult Index()
         {
