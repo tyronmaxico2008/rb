@@ -3,9 +3,9 @@
 function tagging($scope, $http) {
     //$scope.rows = [];
 
-    $scope.row_filter = { mainTag_id: null, subTag_id: null, indexfield: null, }
+    $scope.row_filter = { mainTag_id: null, subTag_id: null, indexfield: null, docLocation: "Mumbai" }
 
-    $scope.row = { };
+    $scope.row = {};
 
     $scope.drp_maintag = [];
     $scope.drp_subtag = [];
@@ -13,20 +13,20 @@ function tagging($scope, $http) {
     $scope.showsave = false;
     $scope.currentPage = 0;
     $scope.totalPages = 0;
-    
+
     //$scope.busy = false;
 
     ng_post($http, "../service/getMaintagList", {}, function (data) {
         $scope.drp_maintag = data;
     });
-        
-        //$scope.busy = false;
-    
+
+    //$scope.busy = false;
+
 
     $scope.loadSubTag = function () {
         var jnPost = { maintagid: $scope.row_filter.mainTag_id };
 
-        ng_post($http,"../service/getSubTagList", jnPost,function (data) {
+        ng_post($http, "../service/getSubTagList", jnPost, function (data) {
             $scope.drp_subtag = data;
         });
     }
@@ -34,16 +34,14 @@ function tagging($scope, $http) {
     $scope.loadIndexfield = function () {
         var jnPost = { subtagid: $scope.row_filter.subTag_id };
 
-        ng_post($http,"../service/getIndexFieldList",jnPost,function(data){
+        ng_post($http, "../service/getIndexFieldList", jnPost, function (data) {
             $scope.indexfield = data;
             debugger;
 
-            for (var i = 0; i < $scope.indexfield.length; i++)
-            {
+            for (var i = 0; i < $scope.indexfield.length; i++) {
                 var r = $scope.indexfield[i];
 
-                if (r.indexval == "Box Barcode No")
-                {
+                if (r.indexval == "Box Barcode No") {
                     r.val = $scope.row.BoxBarcode;
                 }
                 if (r.indexval == "File Barcode No") {
@@ -94,7 +92,7 @@ function tagging($scope, $http) {
                 if (r.indexval == "Customer Name") {
                     r.val = $scope.row.CustomerName;
                 }
-                
+
 
             }
 
@@ -103,32 +101,79 @@ function tagging($scope, $http) {
     }
 
     $scope.getFileBarCodeData = function () {
-        var jnPost = { getbarcode: $scope.getbarcode };
+        var jnPost = { getbarcode: $scope.getbarcode, docLocation: $scope.row_filter.docLocation };
 
         ng_post($http, "../service/getFileBarCodeData", jnPost, function (rows) {
             if (rows.length > 0) {
                 $scope.row = rows[0];
+                $scope.getTotalDoc();
             }
             else
                 alert("No record found !");
         });
     }
 
+    $scope.getTotalDoc = function () {
+        var jnPost = { docLocation: $scope.row_filter.docLocation };
+
+        ng_post($http, "../service/getTotalDoc", jnPost, function (rows) {
+            debugger;
+            $scope.totalDocleft = rows[0]["rec_count"];
+        });
+    }
+
     $scope.moveNextPage = function () {
-        $scope.currentPage += 1;
-        $scope.row_filter  = {};
+        debugger;
+        if ($scope.totalPages >= $scope.currentPage) {
+            $scope.currentPage += 1;
+            $scope.row_filter = { docLocation: $scope.row_filter.docLocation };
+        }
+        else {
+            $scope.getFileBarCodeData();
+        }
     }
 
     $scope.save_indexfield = function () {
-        debugger;
+        //debugger;
 
         jnPost = { dumpid: $scope.row.dumpid, fileBarCode: $scope.row.FileBarcode }
         jnPost['currentPage'] = $scope.currentPage;
         jnPost["maintagid"] = $scope.row_filter.mainTag_id;
         jnPost["subtagid"] = $scope.row_filter.subTag_id;
         jnPost['indexField'] = JSON.stringify($scope.indexfield);
+        jnPost['docLocation'] = $scope.row_filter.docLocation;
 
         ng_post($http, "../Service/save_indexField", jnPost, function (res) {
+            if (res.result == true) {
+                alert("Operation done successfully.");
+                if ($scope.totalPages > $scope.currentPage) {
+                    $scope.moveNextPage();
+                }
+                else {
+                    $scope.getbarcode = "";
+                    $scope.getFileBarCodeData();
+                }
+            }
+            else {
+                alert(res.msg);
+            }
+
+
+        });
+
+    }
+
+    $scope.delete = function () {
+        //debugger;
+
+        jnPost = { dumpid: $scope.row.dumpid, fileBarCode: $scope.row.FileBarcode }
+        jnPost['currentPage'] = $scope.currentPage;
+        //jnPost["maintagid"] = $scope.row_filter.mainTag_id;
+        //jnPost["subtagid"] = $scope.row_filter.subTag_id;
+        //jnPost['indexField'] = JSON.stringify($scope.indexfield);
+        jnPost['docLocation'] = $scope.row_filter.docLocation;
+
+        ng_post($http, "../Service/delete", jnPost, function (res) {
             if (res.result == true) {
                 alert("Operation done successfully.");
                 $scope.moveNextPage();
@@ -136,12 +181,15 @@ function tagging($scope, $http) {
             else {
                 alert(res.msg);
             }
-            
+
 
         });
 
     }
 
+
+
+    
 }
 
 

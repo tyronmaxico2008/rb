@@ -21,10 +21,15 @@ namespace Whirlpool_logistics.Controllers
         }
         public ActionResult Login()
         {
+            Session.Clear();
+            Session.RemoveAll();
             return View();
         }
 
-
+        public ActionResult ReportView()
+        {
+            return View();
+        }
         
 
         

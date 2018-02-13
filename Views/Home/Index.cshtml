@@ -20,9 +20,17 @@
             <div class="panel-heading">
                 Index Field >> Current Page : {{currentPage}}
 
-                
+                &nbsp;&nbsp;&nbsp;&nbsp;Total Doc Left: {{totalDocleft}}
             </div>
             <div class="panel-body">
+                <div class="form-group">
+                    <select class="form-control" ng-model="row_filter.docLocation">
+                        <option>Mumbai</option>
+                        <option>Delhi</option>
+                        <option>Chennai</option>
+                        
+                    </select>
+                </div>
                 <div class="form-group">
                     <label>File Barcode</label>
                     <div class="input-group">
@@ -46,6 +54,12 @@
                         <option value="">--Select--</option>
                     </select>
                 </div>
+                <div class="form-group">
+                    <div class="col-md-6"><button class="btn btn-primary" ng-click="delete()">Delete</button></div>
+                    <div class="col-md-6"><button class="btn btn-primary" ng-click="save_indexfield()">Save Changes</button></div>
+                </div>
+
+                <hr /><br /> <hr />
 
                 <div class="row">
                     <div class="col-md-12">
@@ -60,7 +74,7 @@
 
 
             <div class="panel-footer text-right">
-                <button class="btn btn-primary" ng-click="save_indexfield()">Save Changes</button>
+                
             </div>
         </div>
     </div>

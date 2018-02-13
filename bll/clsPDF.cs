@@ -17,23 +17,36 @@ namespace Whirlpool_logistics.bll
             string sPath = ConfigurationManager.AppSettings["docPath"] + fileBarcode + ".pdf";
             return sPath;
         }
-        
+
         public void savePage(string fileBarCode
-            ,string ImageName, int iPageNum)
+            , string ImageName, int iPageNum)
         {
 
 
             string sSource = getPDFPath(fileBarCode);
-            string sDestination  = ConfigurationManager.AppSettings["uploadPath"] + ImageName +".pdf";
+            string sDestination = ConfigurationManager.AppSettings["uploadPath"] + ImageName + ".pdf";
 
             //string finalImagePage = ConfigurationManager.AppSettings["uploadPath"] + fileBarcode "_" iPage + ".pdf";
-            ExtractPages(sSource,sDestination,iPageNum,iPageNum);
+            ExtractPages(sSource, sDestination, iPageNum, iPageNum);
+
+        }
+
+        public void deletePage(string fileBarCode
+            , string ImageName, int iPageNum)
+        {
+
+
+            string sSource = getPDFPath(fileBarCode);
+            string sDestination = ConfigurationManager.AppSettings["uploadDelPath"] + ImageName + ".pdf";
+
+            //string finalImagePage = ConfigurationManager.AppSettings["uploadPath"] + fileBarcode "_" iPage + ".pdf";
+            ExtractPages(sSource, sDestination, iPageNum, iPageNum);
 
         }
 
 
 
-        public  void ExtractPages(string sourcePDFpath, string outputPDFpath, int startpage, int endpage)
+        public void ExtractPages(string sourcePDFpath, string outputPDFpath, int startpage, int endpage)
         {
             PdfReader reader = null;
             Document sourceDocument = null;
