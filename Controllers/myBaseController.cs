@@ -17,10 +17,10 @@ namespace Whirlpool_logistics.Controllers
         //
         // GET: /myBase/
 
-        public ActionResult Index()
-        {
-            return View();
-        }
+        //public ActionResult Index()
+        //{
+        //    return View();
+        //}
 
 
         public string getConnectionString()
