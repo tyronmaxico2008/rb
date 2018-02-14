@@ -16,7 +16,39 @@
                 <i class="fa fa-search"></i>&nbsp;Search Document
             </div>
             <div class="panel-body">
-                <doc-filter></doc-filter>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Main Tag</label>
+                            <select class="form-control" ng-model="row_filter.mainTag_id" ng-options="r.maintagid as  r.maintagval for r in drp_maintag" ng-change="loadSubTag()">
+                                <option>--Select--</option>
+                            </select>
+
+                        </div>
+                        <div class="form-group">
+                            <label>Sub Tag</label>
+                            <select class="form-control" ng-model="row_filter.subTag_id" ng-change="loadIndexfield()" ng-options="r.subtagid as  r.subtagval for r in drp_subtag">
+                                <option value="">--Select--</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group" ng-repeat="r in indexfield">
+                            <label ng-bind="r.indexval"></label>
+                            <div class="input-group">
+                                <div class="input-group-btn">
+                                    <select class="form-control" style="width: 100px" ng-model="r.operator">
+                                        <option value="">--Select--</option>
+                                        <option value="Like">Like</option>
+                                        <option value="Comma Seprated">Comma Seprated</option>
+                                        <option value="=">Equals</option>
+                                    </select>
+                                </div>
+                                <input type="text" class="form-control" ng-model="r.val" />
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="panel-footer text-right">
                 <button class="btn btn-primary" ng-click="load()"><i class="fa fa-search"></i>&nbsp;Search</button>
@@ -72,8 +104,8 @@
                 </table>
             </div>
             <!-- Modal -->
-            <div id="divViewPDF" class="modal fade"  role="dialog">
-                <div class="modal-dialog modal-lg" style="min-width:1200px;max-height:600px;overflow:auto">
+            <div id="divViewPDF" class="modal fade" role="dialog">
+                <div class="modal-dialog modal-lg" style="min-width: 1200px; max-height: 600px; overflow: auto">
 
                     <!-- Modal content-->
                     <div class="modal-content">
@@ -85,10 +117,10 @@
                             <div class="col-md-9">
                                 <pdf-view2 bar-code="current_row.imageName"></pdf-view2>
                             </div>
-                            <div class="col-md-3" style="overflow-x:auto">
+                            <div class="col-md-3" style="overflow-x: auto">
                                 <br />
                                 <label class="control-label">Index Values</label>
-                                <table class="table table-bordered" >
+                                <table class="table table-bordered">
                                     <tr ng-repeat="r in datares">
                                         <td><span ng-bind="r.indexval"></span></td>
                                         <td><span ng-bind="r.val"></span></td>
@@ -97,7 +129,7 @@
                             </div>
 
                         </div>
-                        <div class="modal-footer" style="clear:both">
+                        <div class="modal-footer" style="clear: both">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         </div>
                     </div>
