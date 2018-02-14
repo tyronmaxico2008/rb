@@ -14,6 +14,8 @@ function tagging($scope, $http) {
     $scope.currentPage = 0;
     $scope.totalPages = 0;
 
+    $scope.inProcess = false;
+
     //$scope.busy = false;
 
     ng_post($http, "../service/getMaintagList", {}, function (data) {
@@ -101,15 +103,22 @@ function tagging($scope, $http) {
     }
 
     $scope.getFileBarCodeData = function () {
+        debugger;
         var jnPost = { getbarcode: $scope.getbarcode, docLocation: $scope.row_filter.docLocation };
-
+        $scope.inProcess = true;
         ng_post($http, "../service/getFileBarCodeData", jnPost, function (rows) {
             if (rows.length > 0) {
                 $scope.row = rows[0];
                 $scope.getTotalDoc();
+                $scope.indexfield = [];
+                $scope.row_filter.mainTag_id = "";
+                $scope.row_filter.subTag_id = "";
             }
-            else
+            else {
+                $scope.inProcess = false;
                 alert("No record found !");
+                
+            }
         });
     }
 
@@ -119,6 +128,14 @@ function tagging($scope, $http) {
         ng_post($http, "../service/getTotalDoc", jnPost, function (rows) {
             debugger;
             $scope.totalDocleft = rows[0]["rec_count"];
+        });
+    }
+
+    $scope.releaseDoc = function () {
+        var jnPost = { filebarcode: $scope.row.FileBarcode };
+
+        ng_post($http, "../service/releaseDoc", jnPost, function (rows) {
+            $scope.inProcess = false;
         });
     }
 
@@ -150,6 +167,7 @@ function tagging($scope, $http) {
                     $scope.moveNextPage();
                 }
                 else {
+                    $scope.inProcess = false;
                     $scope.getbarcode = "";
                     $scope.getFileBarCodeData();
                 }
@@ -189,7 +207,7 @@ function tagging($scope, $http) {
 
 
 
-    
+
 }
 
 

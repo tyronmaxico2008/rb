@@ -32,11 +32,19 @@ namespace Whirlpool_logistics.Controllers
         }
 
 
+
         public ActionResult searchDoc()
         {
             return View();
         }
 
+
+        public ActionResult Logout()
+        {
+            Session.Clear();
+            Session.RemoveAll();
+            return RedirectToAction("Login");
+        }
         
 
     }

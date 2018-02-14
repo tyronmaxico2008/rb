@@ -182,6 +182,7 @@
     <Content Include="css\signin.css" />
     <Content Include="css\Style.css" />
     <Content Include="Global.asax" />
+    <Content Include="Images\loading.gif" />
     <Content Include="Images\writer-home-logo.png" />
     <Content Include="Scripts\angular.min.1.6.js" />
     <Content Include="Scripts\bootstrap.min.js" />

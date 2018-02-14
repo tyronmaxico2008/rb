@@ -15,7 +15,7 @@
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>main Tag Name</Value>
+                            <Value>Main Tag Name</Value>
                             <Style>
                               <FontWeight>Bold</FontWeight>
                             </Style>
@@ -66,7 +66,7 @@
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>sub Tag Name</Value>
+                            <Value>Sub Tag Name</Value>
                             <Style>
                               <FontWeight>Bold</FontWeight>
                             </Style>
@@ -117,7 +117,7 @@
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>image Name</Value>
+                            <Value>Image Name</Value>
                             <Style>
                               <FontWeight>Bold</FontWeight>
                             </Style>
@@ -161,14 +161,14 @@
               </TablixCornerCell>
               <TablixCornerCell>
                 <CellContents>
-                  <Textbox Name="Textbox4">
+                  <Textbox Name="Textbox12">
                     <CanGrow>true</CanGrow>
                     <KeepTogether>true</KeepTogether>
                     <Paragraphs>
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value />
+                            <Value>Doc Location</Value>
                             <Style>
                               <FontWeight>Bold</FontWeight>
                             </Style>
@@ -177,7 +177,58 @@
                         <Style />
                       </Paragraph>
                     </Paragraphs>
-                    <rd:DefaultName>Textbox4</rd:DefaultName>
+                    <rd:DefaultName>Textbox12</rd:DefaultName>
+                    <Style>
+                      <Border>
+                        <Style>Solid</Style>
+                      </Border>
+                      <TopBorder>
+                        <Color>Black</Color>
+                        <Style>Solid</Style>
+                        <Width>1pt</Width>
+                      </TopBorder>
+                      <BottomBorder>
+                        <Color>Black</Color>
+                        <Style>Solid</Style>
+                        <Width>1pt</Width>
+                      </BottomBorder>
+                      <LeftBorder>
+                        <Color>Black</Color>
+                        <Style>Solid</Style>
+                        <Width>1pt</Width>
+                      </LeftBorder>
+                      <RightBorder>
+                        <Color>Black</Color>
+                        <Style>Solid</Style>
+                        <Width>1pt</Width>
+                      </RightBorder>
+                      <PaddingLeft>2pt</PaddingLeft>
+                      <PaddingRight>2pt</PaddingRight>
+                      <PaddingTop>2pt</PaddingTop>
+                      <PaddingBottom>2pt</PaddingBottom>
+                    </Style>
+                  </Textbox>
+                </CellContents>
+              </TablixCornerCell>
+              <TablixCornerCell>
+                <CellContents>
+                  <Textbox Name="Textbox15">
+                    <CanGrow>true</CanGrow>
+                    <KeepTogether>true</KeepTogether>
+                    <Paragraphs>
+                      <Paragraph>
+                        <TextRuns>
+                          <TextRun>
+                            <Value>Entry Date</Value>
+                            <Style>
+                              <FontWeight>Bold</FontWeight>
+                            </Style>
+                          </TextRun>
+                        </TextRuns>
+                        <Style />
+                      </Paragraph>
+                    </Paragraphs>
+                    <rd:DefaultName>Textbox15</rd:DefaultName>
                     <Style>
                       <Border>
                         <Style>Solid</Style>
@@ -219,7 +270,7 @@
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value />
+                            <Value>File Barcode</Value>
                             <Style>
                               <FontWeight>Bold</FontWeight>
                             </Style>
@@ -587,34 +638,34 @@
                       </TablixHeader>
                       <TablixMembers>
                         <TablixMember>
-                          <Group Name="matrix1_fileBarCode">
+                          <Group Name="docLocation">
                             <GroupExpressions>
-                              <GroupExpression>=Fields!fileBarCode.Value</GroupExpression>
+                              <GroupExpression>=Fields!docLocation.Value</GroupExpression>
                             </GroupExpressions>
                           </Group>
                           <SortExpressions>
                             <SortExpression>
-                              <Value>=Fields!fileBarCode.Value</Value>
+                              <Value>=Fields!docLocation.Value</Value>
                             </SortExpression>
                           </SortExpressions>
                           <TablixHeader>
                             <Size>1in</Size>
                             <CellContents>
-                              <Textbox Name="Textbox5">
+                              <Textbox Name="docLocation">
                                 <CanGrow>true</CanGrow>
                                 <KeepTogether>true</KeepTogether>
                                 <Paragraphs>
                                   <Paragraph>
                                     <TextRuns>
                                       <TextRun>
-                                        <Value />
+                                        <Value>=Fields!docLocation.Value</Value>
                                         <Style />
                                       </TextRun>
                                     </TextRuns>
                                     <Style />
                                   </Paragraph>
                                 </Paragraphs>
-                                <rd:DefaultName>Textbox5</rd:DefaultName>
+                                <rd:DefaultName>docLocation</rd:DefaultName>
                                 <Style>
                                   <Border>
                                     <Style>Solid</Style>
@@ -649,24 +700,34 @@
                           </TablixHeader>
                           <TablixMembers>
                             <TablixMember>
+                              <Group Name="entrydate">
+                                <GroupExpressions>
+                                  <GroupExpression>=Fields!entrydate.Value</GroupExpression>
+                                </GroupExpressions>
+                              </Group>
+                              <SortExpressions>
+                                <SortExpression>
+                                  <Value>=Fields!entrydate.Value</Value>
+                                </SortExpression>
+                              </SortExpressions>
                               <TablixHeader>
-                                <Size>1.77083in</Size>
+                                <Size>1in</Size>
                                 <CellContents>
-                                  <Textbox Name="fileBarCode">
+                                  <Textbox Name="entrydate">
                                     <CanGrow>true</CanGrow>
                                     <KeepTogether>true</KeepTogether>
                                     <Paragraphs>
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=Fields!fileBarCode.Value</Value>
+                                            <Value>=Format(Fields!entrydate.Value,"dd-MM-yyyy")</Value>
                                             <Style />
                                           </TextRun>
                                         </TextRuns>
                                         <Style />
                                       </Paragraph>
                                     </Paragraphs>
-                                    <rd:DefaultName>fileBarCode</rd:DefaultName>
+                                    <rd:DefaultName>entrydate</rd:DefaultName>
                                     <Style>
                                       <Border>
                                         <Style>Solid</Style>
@@ -699,10 +760,78 @@
                                   </Textbox>
                                 </CellContents>
                               </TablixHeader>
+                              <TablixMembers>
+                                <TablixMember>
+                                  <Group Name="matrix1_fileBarCode">
+                                    <GroupExpressions>
+                                      <GroupExpression>=Fields!fileBarCode.Value</GroupExpression>
+                                    </GroupExpressions>
+                                  </Group>
+                                  <SortExpressions>
+                                    <SortExpression>
+                                      <Value>=Fields!fileBarCode.Value</Value>
+                                    </SortExpression>
+                                  </SortExpressions>
+                                  <TablixMembers>
+                                    <TablixMember>
+                                      <TablixHeader>
+                                        <Size>1.77083in</Size>
+                                        <CellContents>
+                                          <Textbox Name="fileBarCode">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value>=Fields!fileBarCode.Value</Value>
+                                                    <Style />
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style />
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>fileBarCode</rd:DefaultName>
+                                            <Style>
+                                              <Border>
+                                                <Style>Solid</Style>
+                                              </Border>
+                                              <TopBorder>
+                                                <Color>Black</Color>
+                                                <Style>Solid</Style>
+                                                <Width>1pt</Width>
+                                              </TopBorder>
+                                              <BottomBorder>
+                                                <Color>Black</Color>
+                                                <Style>Solid</Style>
+                                                <Width>1pt</Width>
+                                              </BottomBorder>
+                                              <LeftBorder>
+                                                <Color>Black</Color>
+                                                <Style>Solid</Style>
+                                                <Width>1pt</Width>
+                                              </LeftBorder>
+                                              <RightBorder>
+                                                <Color>Black</Color>
+                                                <Style>Solid</Style>
+                                                <Width>1pt</Width>
+                                              </RightBorder>
+                                              <PaddingLeft>2pt</PaddingLeft>
+                                              <PaddingRight>2pt</PaddingRight>
+                                              <PaddingTop>2pt</PaddingTop>
+                                              <PaddingBottom>2pt</PaddingBottom>
+                                            </Style>
+                                          </Textbox>
+                                        </CellContents>
+                                      </TablixHeader>
+                                    </TablixMember>
+                                  </TablixMembers>
+                                  <DataElementOutput>Output</DataElementOutput>
+                                  <KeepTogether>true</KeepTogether>
+                                </TablixMember>
+                              </TablixMembers>
                             </TablixMember>
                           </TablixMembers>
-                          <DataElementOutput>Output</DataElementOutput>
-                          <KeepTogether>true</KeepTogether>
                         </TablixMember>
                       </TablixMembers>
                     </TablixMember>
@@ -717,7 +846,7 @@
         <DataSetName>DataSet1</DataSetName>
         <Top>0.21in</Top>
         <Height>0.42in</Height>
-        <Width>8.23958in</Width>
+        <Width>9.23958in</Width>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -796,7 +925,7 @@
     <DataSet Name="DataSet1">
       <Query>
         <DataSourceName>con</DataSourceName>
-        <CommandText>SELECT        id, mFileID, index_id, val, indexval, subTagName, mainTagName, fileBarCode, imageName
+        <CommandText>SELECT        id, mFileID, index_id, val, indexval, subTagName, mainTagName, fileBarCode, imageName, entrydate, docLocation
 FROM            vpageIndexData</CommandText>
       </Query>
       <Fields>
@@ -834,6 +963,14 @@ FROM            vpageIndexData</CommandText>
         </Field>
         <Field Name="imageName">
           <DataField>imageName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="entrydate">
+          <DataField>entrydate</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="docLocation">
+          <DataField>docLocation</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>

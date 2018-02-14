@@ -59,6 +59,7 @@ myApp.directive("pdfViewer", function () {
                     var context = canvas.getContext('2d');
                     canvas.height = viewport.height;
                     canvas.width = viewport.width;
+                    
 
                     var renderContext = {
                         canvasContext: context,
@@ -95,6 +96,15 @@ myApp.directive("pdfViewer", function () {
                 $scope.currentPage -= 1;
                 _viewPage();
             }
+
+            $scope.rotateleft = function () {
+
+            }
+
+            $scope.rotateright = function () {
+
+            }
+
         }
         , link: function (element) {
 
