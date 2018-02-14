@@ -17,16 +17,16 @@ function report($scope, $http) {
     //$scope.busy = false;
 
 
-    $scope.loadSubTag = function () {
-        var jnPost = { maintagid: $scope.row_filter.mainTag_id };
+    //$scope.loadSubTag = function () {
+    //    var jnPost = { maintagid: $scope.row_filter.mainTag_id };
 
-        ng_post($http, "../service/getSubTagList", jnPost, function (data) {
-            $scope.drp_subtag = data;
-        });
-    }
+    //    ng_post($http, "../service/getSubTagList", jnPost, function (data) {
+    //        $scope.drp_subtag = data;
+    //    });
+    //}
 
     $scope.fetchReport = function () {
-        var jnPost = { maintagid: $scope.row_filter.mainTag_id, subtagid: $scope.row_filter.subTag_id };
+        var jnPost = { maintagid: $scope.row_filter.mainTag_id };
 
         ng_post($http, "../service/setViewData", jnPost, function (data) {
             if (data.result == true) {

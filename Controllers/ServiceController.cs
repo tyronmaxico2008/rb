@@ -16,7 +16,7 @@ namespace Whirlpool_logistics.Controllers
     {
         //
         // GET: /Service/
-        
+
 
         public ActionResult Index()
         {
@@ -109,7 +109,18 @@ namespace Whirlpool_logistics.Controllers
 
         }
 
-
+        [HttpPost]
+        public ActionResult releaseDoc()
+        {
+            using (SqlConnection conn = new SqlConnection(getConnectionString()))
+            {
+                conn.Open();
+                var cmd = conn.CreateCommand();
+                cmd.CommandText = "update dump set flag=null where FileBarcode='" + Request.Form["FileBarcode"] + "'";
+                cmd.ExecuteNonQuery();
+            }
+            return Content("", "application/json");
+        }
 
         public ActionResult fetchPDF()
         {
@@ -164,7 +175,7 @@ namespace Whirlpool_logistics.Controllers
             {
                 conn.Open();
                 var cmd = conn.CreateCommand();
-                cmd.CommandText = "insert into mfile (dumpid,fileBarCode,imageName,maintagid,subtagid,docLocation) Values(@dumpid,@fileBarCode,@imageName,@maintagid,@subtagid,@docLocation)";
+                cmd.CommandText = "insert into mfile (dumpid,fileBarCode,imageName,maintagid,subtagid,docLocation,userid) Values(@dumpid,@fileBarCode,@imageName,@maintagid,@subtagid,@docLocation,@userid)";
                 cmd.CommandText += "\r\n  select SCOPE_IDENTITY() ";
 
                 cmd.Parameters.AddWithValue("@dumpid", dumpid);
@@ -173,6 +184,7 @@ namespace Whirlpool_logistics.Controllers
                 cmd.Parameters.AddWithValue("maintagid", iMainTagID);
                 cmd.Parameters.AddWithValue("subtagid", iSubTagID);
                 cmd.Parameters.AddWithValue("docLocation", docLocation);
+                cmd.Parameters.AddWithValue("userid", Session["userid"].ToString());
 
                 int iID = Convert.ToInt32(cmd.ExecuteScalar());
 
@@ -237,7 +249,7 @@ namespace Whirlpool_logistics.Controllers
             {
                 conn.Open();
                 var cmd = conn.CreateCommand();
-                cmd.CommandText = "insert into docDelete (dumpid,fileBarCode,imageName,docLocation) Values(@dumpid,@fileBarCode,@imageName,@docLocation)";
+                cmd.CommandText = "insert into docDelete (dumpid,fileBarCode,imageName,docLocation,userid) Values(@dumpid,@fileBarCode,@imageName,@docLocation,@userid)";
                 cmd.CommandText += "\r\n  select SCOPE_IDENTITY() ";
 
                 cmd.Parameters.AddWithValue("@dumpid", dumpid);
@@ -246,6 +258,7 @@ namespace Whirlpool_logistics.Controllers
                 //cmd.Parameters.AddWithValue("maintagid", iMainTagID);
                 //cmd.Parameters.AddWithValue("subtagid", iSubTagID);
                 cmd.Parameters.AddWithValue("docLocation", docLocation);
+                cmd.Parameters.AddWithValue("userid", Session["userid"].ToString());
                 int iID = Convert.ToInt32(cmd.ExecuteScalar());
 
                 /////////mFile Record updated
@@ -278,18 +291,19 @@ namespace Whirlpool_logistics.Controllers
         [HttpPost]
         public ActionResult setViewData()
         {
-            if (string.IsNullOrWhiteSpace(Request.Form["maintagid"]) || string.IsNullOrWhiteSpace(Request.Form["subtagid"]))
+            if (string.IsNullOrWhiteSpace(Request.Form["maintagid"]))
             {
-                return Json(new { msg = "Please specify Main Tag and Sub Tag !", result = false }, JsonRequestBehavior.AllowGet);
+                return Json(new { msg = "Please specify Main Tag !", result = false }, JsonRequestBehavior.AllowGet);
             }
             try
             {
-                string s = "Select * from vpageIndexData where maintagid='" + Request.Form["maintagid"] + "' and subtagid='" + Request.Form["subtagid"] + "'";
+                string s = "Select * from vpageIndexData where maintagid='" + Request.Form["maintagid"] + "'";
                 DataTable t = getData(s);
                 Session["reportData"] = t;
                 if (t.Rows.Count > 0)
                     return Json(new { msg = "", result = true }, JsonRequestBehavior.AllowGet);
-                else {
+                else
+                {
                     return Json(new { msg = "", result = false }, JsonRequestBehavior.AllowGet);
                 }
             }
@@ -321,10 +335,9 @@ namespace Whirlpool_logistics.Controllers
             System.IO.MemoryStream ms = new System.IO.MemoryStream(System.IO.File.ReadAllBytes(sReportPath));
             rpt.LoadReportDefinition(ms);
 
-
             Byte[] results = rpt.Render(sFileType);
-
-            return File(results, "application/unknown", "report.xls");
+            string filename = "Report" + DateTime.Now.ToString("yyyy-MMM-dd-HHmmss") + ".xls";
+            return File(results, "application/unknown", filename);
             //return results;
 
         }

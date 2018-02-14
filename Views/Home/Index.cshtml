@@ -15,7 +15,10 @@
 
 
 <div class="row" ng-app="myApp" ng-controller="tagging">
-    <div class="col-md-4">
+    @*<div class="col-md-12" style="text-align:center" ng-show="busy">
+        <img src="../Images/loading.gif" />
+    </div>*@
+    <div class="col-md-4" ng-hide="busy">
         <div class="panel panel-primary">
             <div class="panel-heading">
                 Index Field >> Current Page : {{currentPage}}
@@ -24,20 +27,59 @@
             </div>
             <div class="panel-body">
                 <div class="form-group">
-                    <select class="form-control" ng-model="row_filter.docLocation">
-                        <option>Mumbai</option>
-                        <option>Delhi</option>
-                        <option>Chennai</option>
-                        
-                    </select>
+                    <div class="col-md-8">
+                        <select class="form-control" ng-model="row_filter.docLocation" ng-disabled="inProcess">
+                            <option>Mumbai</option>
+                            <option>Ahmedabad</option>
+                            <option>Indore</option>
+                            <option>Surat</option>
+                            <option>Pune</option>
+                            <option>Nagpur</option>
+                            <option>Goa</option>
+                            <option>Hubli</option>
+                            <option>Bangalore</option>
+                            <option>Salem</option>
+                            <option>Guntur</option>
+                            <option>Hyderabad</option>
+                            <option>Chennai</option>
+                            <option>Madurai</option>
+                            <option>Pondichery</option>
+                            <option>Cochin</option>
+                            <option>Mallapuram</option>
+                            <option>Kolkata RDC</option>
+                            <option>Kolkata</option>
+                            <option>Durgapur</option>
+                            <option>Raipur</option>
+                            <option>Bhubaneswar</option>
+                            <option>Guwahati</option>
+                            <option>Patna</option>
+                            <option>Ranchi</option>
+                            <option>FARIDABAD</option>
+                            <option>BUDHPUR, BIJAPUR ND</option>
+                            <option>PARWANOO,HP</option>
+                            <option>JAIPUR,RJ</option>
+                            <option>CHANDIGARH</option>
+                            <option>DEHRADUN,UK</option>
+                            <option>BANUR,MOHALI</option>
+                            <option>LUCKNOW,UP</option>
+                            <option>GHAZIABAD,UP</option>
+                            <option>PALWAL,HR</option>
+                            <option>JAMMU</option>
+                        </select>
+                    </div>
+                    <div class="input-group-btn ">
+                        <button class="btn btn-danger" ng-click="releaseDoc()" style="float: right">Release Doc</button>
+                    </div>
                 </div>
+
                 <div class="form-group">
                     <label>File Barcode</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" ng-model="getbarcode" />
+                        <input type="text" class="form-control" ng-model="getbarcode" ng-change="releaseDoc()" />
                         <div class="input-group-btn">
-                            <button class="btn btn-primary" ng-click="getFileBarCodeData()">Get Doc</button>
+                            <button class="btn btn-primary" ng-click="getFileBarCodeData()" ng-disabled="inProcess">Get Doc</button>
                         </div>
+
                     </div>
                 </div>
 
@@ -55,11 +97,17 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <div class="col-md-6"><button class="btn btn-primary" ng-click="delete()">Delete</button></div>
-                    <div class="col-md-6"><button class="btn btn-primary" ng-click="save_indexfield()">Save Changes</button></div>
+                    <div class="col-md-6">
+                        <button class="btn btn-danger" ng-click="delete()">Delete</button>
+                    </div>
+                    <div class="col-md-6">
+                        <button class="btn btn-primary" ng-click="save_indexfield()">Save Changes</button>
+                    </div>
                 </div>
 
-                <hr /><br /> <hr />
+                <hr />
+                <br />
+                <hr />
 
                 <div class="row">
                     <div class="col-md-12">
@@ -74,12 +122,11 @@
 
 
             <div class="panel-footer text-right">
-                
             </div>
         </div>
     </div>
 
-    <div class="col-md-8">
+    <div class="col-md-8" ng-hide="busy">
         <div class="panel panel-default">
             <div class="panel-heading">
                 PDF Viewer For File Boarcode : <span ng-bind="row.FileBarcode"></span>
@@ -92,36 +139,52 @@
                 <label class="form-control">Dump Data</label>
                 <table class="table table-bordered">
                     <tr>
-                        <td>BoxBarcode</td><td><span ng-bind="row.BoxBarcode"></span></td>
-                        <td>FileBarcode</td><td><span ng-bind="row.FileBarcode"></span></td>
+                        <td>BoxBarcode</td>
+                        <td><span ng-bind="row.BoxBarcode"></span></td>
+                        <td>FileBarcode</td>
+                        <td><span ng-bind="row.FileBarcode"></span></td>
                     </tr>
                     <tr>
-                        <td>SalesInvoiceNo</td><td><span ng-bind="row.InvoiceNo"></span></td>
-                        <td>SaleInvoiceDate</td><td><span ng-bind="row.InvoiceDate"></span></td>
+                        <td>SalesInvoiceNo</td>
+                        <td><span ng-bind="row.InvoiceNo"></span></td>
+                        <td>SaleInvoiceDate</td>
+                        <td><span ng-bind="row.InvoiceDate"></span></td>
                     </tr>
                     <tr>
-                        <td>SRNNo</td><td><span ng-bind="row.SRNNo"></span></td>
-                        <td>SRNDate</td><td><span ng-bind="row.SRNDate"></span></td>
+                        <td>SRNNo</td>
+                        <td><span ng-bind="row.SRNNo"></span></td>
+                        <td>SRNDate</td>
+                        <td><span ng-bind="row.SRNDate"></span></td>
                     </tr>
                     <tr>
-                        <td>ARADocNo</td><td><span ng-bind="row.ARADocNo"></span></td>
-                        <td>ARACity</td><td><span ng-bind="row.ARACity"></span></td>
+                        <td>ARADocNo</td>
+                        <td><span ng-bind="row.ARADocNo"></span></td>
+                        <td>ARACity</td>
+                        <td><span ng-bind="row.ARACity"></span></td>
                     </tr>
                     <tr>
-                        <td>STNNo</td><td><span ng-bind="row.STNNo"></span></td>
-                        <td>STNDate</td><td><span ng-bind="row.STNDate"></span></td>
+                        <td>STNNo</td>
+                        <td><span ng-bind="row.STNNo"></span></td>
+                        <td>STNDate</td>
+                        <td><span ng-bind="row.STNDate"></span></td>
                     </tr>
                     <tr>
-                        <td>STNFrom</td><td><span ng-bind="row.STNFrom"></span></td>
-                        <td>STNTo</td><td><span ng-bind="row.STNTo"></span></td>
+                        <td>STNFrom</td>
+                        <td><span ng-bind="row.STNFrom"></span></td>
+                        <td>STNTo</td>
+                        <td><span ng-bind="row.STNTo"></span></td>
                     </tr>
                     <tr>
-                        <td>LRNo</td><td><span ng-bind="row.LRNo"></span></td>
-                        <td>Comment</td><td><span ng-bind="row.Comment"></span></td>
+                        <td>LRNo</td>
+                        <td><span ng-bind="row.LRNo"></span></td>
+                        <td>Comment</td>
+                        <td><span ng-bind="row.Comment"></span></td>
                     </tr>
                     <tr>
-                        <td>BillingLocation</td><td><span ng-bind="row.BillingLocation"></span></td>
-                        <td>CustomerName</td><td><span ng-bind="row.CustomerName"></span></td>
+                        <td>BillingLocation</td>
+                        <td><span ng-bind="row.BillingLocation"></span></td>
+                        <td>CustomerName</td>
+                        <td><span ng-bind="row.CustomerName"></span></td>
                     </tr>
                 </table>
             </div>
