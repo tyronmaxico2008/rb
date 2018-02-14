@@ -1,0 +1,79 @@
+﻿@{
+    ViewBag.Title = "searchDoc";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+
+@section  headerContent {
+    <script src="~/Scripts/viewDoc.js"></script>
+
+}
+
+<div class="row" ng-app="myApp" ng-controller="searchDoc">
+    <div class="col-md-3">
+        <div class="panel panel-primary">
+            <div class="panel-heading"> 
+                <i class="fa fa-search"></i>&nbsp;Search Document
+            </div>
+            <div class="panel-body">
+                <doc-filter></doc-filter>
+            </div>
+            <div class="panel-footer text-right">
+                <button class="btn btn-primary" ng-click="load()"><i class="fa fa-search"></i>&nbsp;Search</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="panel panel-default">
+             <div class="panel-heading">
+                 <i class="fa fa-table"></i>&nbsp;Result
+             </div>
+            <div class="panel-body">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Main Tag</th>
+                            <th>Sub Tag</th>
+                            <th>File Barcode</th>
+                            <th>Image Name</th>
+                            <th>Location </th>
+                            <th>Entry Date </th>
+                            <th><i class="fa fa-gear"></i></th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr ng-repeat="r in rows">
+                            <td>
+                                <span ng-bind="r.maintagval"></span>
+                            </td>
+                            <td>
+                                <span ng-bind="r.subtagval"></span>
+                            </td>
+                            <td>
+                                <span ng-bind="r.fileBarCode"></span>
+                            </td>
+                            <td>
+                                <span ng-bind="r.imageName"></span>
+                            </td>
+                            <td>
+                                <span ng-bind="r.docLocation"></span>
+                            </td>
+                            <td>
+                                <span ng-bind="r.entrydate | date :'dd/MMM/yyyy'"></span>
+                            </td>
+                            <td>
+                                <a><i class="fa fa-search"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+

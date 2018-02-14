@@ -16,7 +16,7 @@ namespace Whirlpool_logistics.Controllers
     {
         //
         // GET: /Service/
-        
+
 
         public ActionResult Index()
         {
@@ -289,7 +289,8 @@ namespace Whirlpool_logistics.Controllers
                 Session["reportData"] = t;
                 if (t.Rows.Count > 0)
                     return Json(new { msg = "", result = true }, JsonRequestBehavior.AllowGet);
-                else {
+                else
+                {
                     return Json(new { msg = "", result = false }, JsonRequestBehavior.AllowGet);
                 }
             }
@@ -327,6 +328,30 @@ namespace Whirlpool_logistics.Controllers
             return File(results, "application/unknown", "report.xls");
             //return results;
 
+        }
+
+
+        public ActionResult getData_filelist()
+        {
+
+            StringBuilder sb1 = new StringBuilder();
+
+            sb1.AppendFormat("select * from vmfile where 1 = 1 ");
+            
+            /*
+            sb1.AppendFormat(" and maintagid = " + Request.Form["maintagid"]);
+            
+            sb1.AppendFormat(" and subtagid = " + Request.Form["subtagid"]);
+            */
+            
+
+            DataTable t = getData(sb1.ToString());
+
+
+
+            string sResult = Newtonsoft.Json.JsonConvert.SerializeObject(t);
+
+            return Content(sResult, "application/json");
         }
     }
 }

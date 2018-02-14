@@ -30,7 +30,12 @@ namespace Whirlpool_logistics.Controllers
         {
             return View();
         }
-        
+
+
+        public ActionResult searchDoc()
+        {
+            return View();
+        }
 
         
 
