@@ -341,5 +341,29 @@ namespace Whirlpool_logistics.Controllers
             //return results;
 
         }
+
+
+        public ActionResult getData_filelist()
+        {
+
+            StringBuilder sb1 = new StringBuilder();
+
+            sb1.AppendFormat("select * from vmfile where 1 = 1 ");
+            
+            /*
+            sb1.AppendFormat(" and maintagid = " + Request.Form["maintagid"]);
+            
+            sb1.AppendFormat(" and subtagid = " + Request.Form["subtagid"]);
+            */
+            
+
+            DataTable t = getData(sb1.ToString());
+
+
+
+            string sResult = Newtonsoft.Json.JsonConvert.SerializeObject(t);
+
+            return Content(sResult, "application/json");
+        }
     }
 }
