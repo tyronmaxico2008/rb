@@ -133,6 +133,17 @@ namespace Whirlpool_logistics.Controllers
             return File(data, "application/pdf");
         }
 
+        public ActionResult fetchPDFSearch()
+        {
+            string sPath = ConfigurationManager.AppSettings["uploadPath"] + Request.QueryString["imageName"] + ".pdf";
+
+
+            byte[] data = System.IO.File.ReadAllBytes(sPath);
+
+
+            return File(data, "application/pdf");
+        }
+
         [HttpPost]
         public ActionResult save_indexField()
         {
@@ -342,7 +353,7 @@ namespace Whirlpool_logistics.Controllers
 
         }
 
-
+        [HttpPost]
         public ActionResult getData_filelist()
         {
 
@@ -356,15 +367,26 @@ namespace Whirlpool_logistics.Controllers
             if (!string.IsNullOrWhiteSpace(Request.Form["subtagid"]))
                 sb1.AppendFormat(" and subtagid = '" + Request.Form["subtagid"] + "'");
 
-
-
             DataTable t = getData(sb1.ToString());
-
 
 
             string sResult = Newtonsoft.Json.JsonConvert.SerializeObject(t);
 
             return Content(sResult, "application/json");
         }
+
+        [HttpPost]
+        public ActionResult fetchIndexField()
+        {
+            StringBuilder sb1 = new StringBuilder();
+
+            sb1.AppendFormat("select * from vpageIndexData where 1 = 1 and mFileId=" + Request.Form["id"]);
+            DataTable t = getData(sb1.ToString());
+
+            string sResult = Newtonsoft.Json.JsonConvert.SerializeObject(t);
+
+            return Content(sResult, "application/json");
+        }
+
     }
 }

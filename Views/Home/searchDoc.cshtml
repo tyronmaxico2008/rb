@@ -12,7 +12,7 @@
 <div class="row" ng-app="myApp" ng-controller="searchDoc">
     <div class="col-md-3">
         <div class="panel panel-primary">
-            <div class="panel-heading"> 
+            <div class="panel-heading">
                 <i class="fa fa-search"></i>&nbsp;Search Document
             </div>
             <div class="panel-body">
@@ -25,9 +25,9 @@
     </div>
     <div class="col-md-9">
         <div class="panel panel-default">
-             <div class="panel-heading">
-                 <i class="fa fa-table"></i>&nbsp;Result
-             </div>
+            <div class="panel-heading">
+                <i class="fa fa-table"></i>&nbsp;Result
+            </div>
             <div class="panel-body">
                 <table class="table table-bordered table-hover">
                     <thead>
@@ -64,15 +64,48 @@
                                 <span ng-bind="r.entrydate | date :'dd/MMM/yyyy'"></span>
                             </td>
                             <td>
-                                <a><i class="fa fa-search"></i></a>
+                                <a><i class="fa fa-search" ng-click="showRowData(r)"></i></a>
                             </td>
                         </tr>
                     </tbody>
 
                 </table>
             </div>
-        </div>
+            <!-- Modal -->
+            <div id="divViewPDF" class="modal fade"  role="dialog">
+                <div class="modal-dialog modal-lg" style="min-width:1200px;max-height:600px;overflow:auto">
 
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Document Detail</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="col-md-9">
+                                <pdf-view2 bar-code="current_row.imageName"></pdf-view2>
+                            </div>
+                            <div class="col-md-3" style="overflow-x:auto">
+                                <br />
+                                <label class="control-label">Index Values</label>
+                                <table class="table table-bordered" >
+                                    <tr ng-repeat="r in datares">
+                                        <td><span ng-bind="r.indexval"></span></td>
+                                        <td><span ng-bind="r.val"></span></td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer" style="clear:both">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
     </div>
 </div>
 
