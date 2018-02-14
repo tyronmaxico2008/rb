@@ -349,13 +349,14 @@ namespace Whirlpool_logistics.Controllers
             StringBuilder sb1 = new StringBuilder();
 
             sb1.AppendFormat("select * from vmfile where 1 = 1 ");
-            
-            /*
-            sb1.AppendFormat(" and maintagid = " + Request.Form["maintagid"]);
-            
-            sb1.AppendFormat(" and subtagid = " + Request.Form["subtagid"]);
-            */
-            
+
+            if (!string.IsNullOrWhiteSpace(Request.Form["maintagid"]))
+                sb1.AppendFormat(" and maintagid = '" + Request.Form["maintagid"] + "'");
+
+            if (!string.IsNullOrWhiteSpace(Request.Form["subtagid"]))
+                sb1.AppendFormat(" and subtagid = '" + Request.Form["subtagid"] + "'");
+
+
 
             DataTable t = getData(sb1.ToString());
 
