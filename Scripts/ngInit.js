@@ -1,5 +1,6 @@
-﻿
-var myApp = angular.module("myApp", []);
+﻿/// <reference path="ngCore/ngGRID.js" />
+
+
 
 function getFormData(fields) {
     var fd = new FormData();
@@ -10,18 +11,6 @@ function getFormData(fields) {
     }
 
     return fd;
-}
-
-
-function ng_post($http, slink, jn, callBack) {
-
-    $http.post(slink, getFormData(jn), {
-        transformRequest: angular.identity,
-        headers: { 'Content-Type': undefined }
-    }).then(function (res) {
-
-        callBack(res.data);
-    });
 }
 
 

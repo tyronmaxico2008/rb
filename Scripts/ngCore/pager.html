@@ -1,0 +1,56 @@
+<nav class="navbar no-padding" style="min-height:5px !important;margin:0px">
+     <div class="pull-left no-padding col-md-6" style="padding:0px"ng-show="grd.count > 1">
+    
+
+
+    <select ng-model="grd.pageSize" class="form-control input-xsmall input-inline"  style="float:left;width:60px;padding:2px;margin-top:4px" ng-change="grd.pageIndex = 0; grd.load();">
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+    </select>
+    
+     
+         
+    <div  style="padding-top:10px;float:left;"> &nbsp;&nbsp; Page : <b> <span ng-bind="grd.pageIndex + 1"> </span> </b> Of <span ng-bind="grd.getPageCount()"></span> | Total Records <span ng-bind="grd.count"></span></div>
+    </div>
+
+    <div class="col-md-6 pull-right no-padding " ng-show="grd.getPageCount() > 1" >
+        <ul class="pagination pull-right no-padding" style="margin-top:4px;margin-bottom:1px;">
+            <li ><a href="javascript:;" ng-click="grd.MoveToFirstPage()" ng-show="grd.getPageCount() > grd.pageButtons.length  " ><i class="fa fa-step-backward"></i></a></li>
+            <li><a href="javascript:;" aria-label="Previous" ng-show="grd.getPageCount() > grd.pageButtons.length  " ng-click="grd.MovePrevious()" >
+            <span aria-hidden="true">&laquo;</span> </a></li>
+            <li  ng-repeat="r in grd.pageButtons"  ng-class="{ 'active': r == grd.pageIndex }" ng-show="r < grd.getPageCount()" >
+                <a href="javascript:;" ng-click="grd.changePage(r)"  ng-bind="r + 1" ></a></li>
+            <li><a href="javascript:;" aria-label="Next" ng-show="grd.getPageCount() > grd.pageButtons.length  "  ng-click="grd.MoveNext()" ><span
+                aria-hidden="true">&raquo;</span> </a></li>
+            <li><a href="javascript:;" ng-click="grd.MoveToLastPage()" ng-show="grd.getPageCount() > grd.pageButtons.length  "><i class="fa fa-step-forward"></i></a></li>
+        </ul>
+    </div>
+</nav>
+<!--
+<div class="row">
+    <div class="col-md-12">
+        <div class="btn-group"> 
+            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="true"> 
+               <i class="fa fa-gear"></i> 
+               <span class="caret"></span> 
+            </button> 
+            <ul class="dropdown-menu " role="menu"> 
+               <li>
+                   <a href="javascript:;" ng-href="../Masters/CustomerRegistration?id={{r.id}}"><i class="fa fa-edit"></i>&nbsp;Edit</a>
+                </li> 
+               <li><a href="javascript:;" title="EMI Information" ng-href="../Transactions/EMIEntry?id={{r.id}}"><i class="fa fa-exchange"></i>&nbsp;EMI Info</a>
+                </li> 
+                <li>
+                    <a href="javascript:;" ng-click="grd.del(r,null,$event)"><i class="fa fa-trash-o"></i>&nbsp;Delete</a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                    <a ng-href="../System/Tree?id={{r.parentid2}}"><i class="fa fa-sitemap"></i>&nbsp;Tree</a>
+                </li>
+            </ul> 
+        </div>
+    </div>
+</div>
+-->

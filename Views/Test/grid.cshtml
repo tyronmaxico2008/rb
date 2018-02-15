@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "grid";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+
+@section headerContent
+{
+    <script src="~/Scripts/grid_test.js"></script>
+
+}
+
+<h2>grid Test</h2>
+
+<div class="row" ng-app="myApp" ng-controller="grid_test">
+
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="r in grd.rows">
+                <td><span ng-bind="r.name"></span></td>
+                <td><span ng-bind="r.id"></span></td>
+            </tr>
+        </tbody>
+    </table>
+    <pager grd="grd"/>
+</div>

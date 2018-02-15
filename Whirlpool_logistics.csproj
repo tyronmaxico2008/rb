@@ -39,6 +39,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DAL">
+      <HintPath>..\..\..\..\..\proj2\output\dal\DAL.dll</HintPath>
+    </Reference>
     <Reference Include="itextsharp">
       <HintPath>..\..\..\commonlib\itextsharp.dll</HintPath>
     </Reference>
@@ -131,7 +134,10 @@
     <Compile Include="bll\clsSearchDocument.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\myBaseController.cs" />
+    <Compile Include="Controllers\Service2Controller.cs" />
     <Compile Include="Controllers\ServiceController.cs" />
+    <Compile Include="Controllers\SystemController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -186,8 +192,11 @@
     <Content Include="Images\writer-home-logo.png" />
     <Content Include="Scripts\angular.min.1.6.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\grid_test.js" />
     <Content Include="Scripts\jquery.js" />
     <Content Include="Scripts\login.js" />
+    <Content Include="Scripts\ngCore\ngGRID.js" />
+    <Content Include="Scripts\ngCore\pager.html" />
     <Content Include="Scripts\ngInit.js" />
     <Content Include="Scripts\report.js" />
     <Content Include="Scripts\test.js" />
@@ -281,6 +290,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\searchDoc.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Test\grid.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
