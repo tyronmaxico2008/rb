@@ -30,14 +30,23 @@ namespace Whirlpool_logistics.Controllers
         {
             return View();
         }
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
 
+>>>>>>> de9b9b78bca133217e5447c2ab096b5b596b6313
 
 
         public ActionResult searchDoc()
         {
             return View();
         }
+<<<<<<< HEAD
+>>>>>>> v2
+=======
 
+>>>>>>> de9b9b78bca133217e5447c2ab096b5b596b6313
 
         public ActionResult Logout()
         {
