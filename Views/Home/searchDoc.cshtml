@@ -51,7 +51,7 @@
                 </div>
             </div>
             <div class="panel-footer text-right">
-                <button class="btn btn-primary" ng-click="load()"><i class="fa fa-search"></i>&nbsp;Search</button>
+                <button class="btn btn-primary" ng-click="grdFile.load()"><i class="fa fa-search"></i>&nbsp;Search</button>
             </div>
         </div>
     </div>
@@ -76,7 +76,7 @@
                     </thead>
                     <tbody>
 
-                        <tr ng-repeat="r in rows">
+                        <tr ng-repeat="r in grdFile.rows">
                             <td>
                                 <span ng-bind="r.maintagval"></span>
                             </td>
@@ -102,6 +102,7 @@
                     </tbody>
 
                 </table>
+                <pager grd="grdFile"></pager>
             </div>
             <!-- Modal -->
             <div id="divViewPDF" class="modal fade" role="dialog">

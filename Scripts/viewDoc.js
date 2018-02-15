@@ -27,12 +27,19 @@ myApp.controller("searchDoc", function ($scope, $http) {
 
     $scope.row_filter = { mainTag_id: null, subTag_id: null, indexfield: null };
     $scope.indexfield = [];
+    var _grdFile = new ngGrid($http, "../Service2/getData_filelist?path=0");
 
-    $scope.rows = [];
+    _grdFile.addPostJson(function (d) {
+        d['maintagid'] = $scope.row_filter.mainTag_id;
+        d['subtagid'] = $scope.row_filter.subTag_id;
+        d['indexFieldData'] = JSON.stringify($scope.indexfield);
+    });
+
+    $scope.grdFile = _grdFile;
     $scope.current_row = {};
     $scope.datares = [];
 
-
+    
     ///////////////
     $scope.drp_maintag = [];
     $scope.drp_subtag = [];
@@ -67,16 +74,25 @@ myApp.controller("searchDoc", function ($scope, $http) {
 
 
 
-    $scope.load = function () {
-        debugger;
+    //$scope.load = function () {
+    //    debugger;
+    //    //var _grd = new ngGrid($http, "../Service2/sysobjects?path=0");
 
-        var jnPost = { maintagid: $scope.row_filter.mainTag_id, subtagid: $scope.row_filter.subTag_id };
-        jnPost['indexFieldData'] = JSON.stringify($scope.indexfield);
+    //    //$scope.grd = _grd;
 
-        ng_post($http, "../Service/getData_filelist", jnPost, function (_rows) {
-            $scope.rows = _rows;
-        });
-    }
+    //    //_grd.load();
+
+    //    var jnPost = { maintagid: $scope.row_filter.mainTag_id, subtagid: $scope.row_filter.subTag_id };
+    //    jnPost['indexFieldData'] = JSON.stringify($scope.indexfield);
+
+    //    ng_post($http, "../Service/getData_filelist", jnPost, function (_rows) {
+    //        $scope.rows = _rows;
+
+           
+    //    });
+
+        
+    //}
 
     //ronit change
 

@@ -2,6 +2,7 @@
 /// <reference path="ngInit.js" />
 
 function login($scope, $http) {
+    debugger;
     $scope.signin = function () {
         $scope.chk = "";
 

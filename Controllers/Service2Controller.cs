@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data;
-
+using System.Text;
 
 namespace Whirlpool_logistics.Controllers
 {
@@ -75,7 +75,7 @@ namespace Whirlpool_logistics.Controllers
         private ContentResult getPagingData(DataTable t,int _Start,int _Length)
         {
 
-            var result = new { recordsTotal = t.Rows.Count, data = g.GetTableRows(t, _Start, _Length) };
+            var result = new { recordsTotal = t.Rows.Count, data = g.GetTableRows(t, _Start * _Length, _Length) };
 
             return Content(Newtonsoft.Json.JsonConvert.SerializeObject(result), "application/json");
 
@@ -93,6 +93,55 @@ namespace Whirlpool_logistics.Controllers
         }
 
 
+
+        [HttpPost]
+        public ActionResult getData_filelist()
+        {
+
+            StringBuilder sb1 = new StringBuilder();
+
+            sb1.AppendFormat("select * from vmfile where 1 = 1 ");
+
+            if (!string.IsNullOrWhiteSpace(Request.Form["maintagid"]))
+                sb1.AppendFormat(" and maintagid = '" + Request.Form["maintagid"] + "'");
+
+            //if (!string.IsNullOrWhiteSpace(Request.Form["subtagid"]))
+            //    sb1.AppendFormat(" and subtagid = '" + Request.Form["subtagid"] + "'");
+
+
+            DataTable tIndexField = Newtonsoft.Json.JsonConvert.DeserializeObject<DataTable>(Request.Form["indexFieldData"]);
+
+            if (!tIndexField.Columns.Contains("val"))
+            {
+                tIndexField.Columns.Add("val", typeof(string));
+            }
+
+
+            if (tIndexField.Rows.Count > 0)
+            {
+                StringBuilder sbIn = new StringBuilder();
+
+                sbIn.AppendLine("select distinct mFileID  from dbo.vpageIndexData where 1=1 ");
+                foreach (DataRow r in tIndexField.Rows)
+                {
+                    if (!string.IsNullOrWhiteSpace(r["val"].ToString()))
+                    {
+                        //sbIn.AppendFormat(" and subtagid = {0} and val Like '%{1}%' ", r["subtagid"], r["val"].ToString());
+                        sbIn.AppendFormat("  and val Like '%{0}%' ", r["val"].ToString());
+                    }
+
+                }
+
+                sb1.AppendFormat(" and  id in ({0})", sbIn.ToString());
+
+            }
+
+
+            DataTable t = getData(sb1.ToString());
+
+            return getPagingData(t, start, length);
+           
+        }
 
 
     }
