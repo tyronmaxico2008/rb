@@ -17,6 +17,12 @@ namespace Whirlpool_logistics.Controllers
 
         public ActionResult Index()
         {
+            if (string.IsNullOrWhiteSpace(Session["username"].ToString()))
+            {
+                Session.Clear();
+                Session.RemoveAll();
+                return RedirectToAction("Login");
+            }
             return View();
         }
         public ActionResult Login()
@@ -54,7 +60,7 @@ namespace Whirlpool_logistics.Controllers
             Session.RemoveAll();
             return RedirectToAction("Login");
         }
-        
+
 
     }
 }
