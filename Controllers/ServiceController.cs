@@ -133,6 +133,17 @@ namespace Whirlpool_logistics.Controllers
             return File(data, "application/pdf");
         }
 
+        public ActionResult fetchPDFSearch()
+        {
+            string sPath = ConfigurationManager.AppSettings["uploadPath"] + Request.QueryString["imageName"] + ".pdf";
+
+
+            byte[] data = System.IO.File.ReadAllBytes(sPath);
+
+
+            return File(data, "application/pdf");
+        }
+
         [HttpPost]
         public ActionResult save_indexField()
         {
@@ -342,7 +353,7 @@ namespace Whirlpool_logistics.Controllers
 
         }
 
-
+        [HttpPost]
         public ActionResult getData_filelist()
         {
 
@@ -353,18 +364,60 @@ namespace Whirlpool_logistics.Controllers
             if (!string.IsNullOrWhiteSpace(Request.Form["maintagid"]))
                 sb1.AppendFormat(" and maintagid = '" + Request.Form["maintagid"] + "'");
 
-            if (!string.IsNullOrWhiteSpace(Request.Form["subtagid"]))
-                sb1.AppendFormat(" and subtagid = '" + Request.Form["subtagid"] + "'");
+            //if (!string.IsNullOrWhiteSpace(Request.Form["subtagid"]))
+            //    sb1.AppendFormat(" and subtagid = '" + Request.Form["subtagid"] + "'");
+
+
+            DataTable tIndexField = Newtonsoft.Json.JsonConvert.DeserializeObject<DataTable>(Request.Form["indexFieldData"]);
+
+            if (!tIndexField.Columns.Contains("val"))
+            {
+                tIndexField.Columns.Add("val", typeof(string));
+            }
+
+
+            if (tIndexField.Rows.Count > 0)
+            {
+                StringBuilder sbIn = new StringBuilder();
+
+                sbIn.AppendLine("select distinct mFileID  from dbo.vpageIndexData where 1=1 ");
+                foreach (DataRow r in tIndexField.Rows)
+                {
+                    if (!string.IsNullOrWhiteSpace(r["val"].ToString()))
+                    {
+                        //sbIn.AppendFormat(" and subtagid = {0} and val Like '%{1}%' ", r["subtagid"], r["val"].ToString());
+                        sbIn.AppendFormat("  and val Like '%{0}%' ", r["val"].ToString());
+                    }
+
+                }
+
+                sb1.AppendFormat(" and  id in ({0})", sbIn.ToString());
+
+            }
+
 
 
 
             DataTable t = getData(sb1.ToString());
 
 
+            string sResult = Newtonsoft.Json.JsonConvert.SerializeObject(t);
+
+            return Content(sResult, "application/json");
+        }
+
+        [HttpPost]
+        public ActionResult fetchIndexField()
+        {
+            StringBuilder sb1 = new StringBuilder();
+
+            sb1.AppendFormat("select * from vpageIndexData where 1 = 1 and mFileId=" + Request.Form["id"]);
+            DataTable t = getData(sb1.ToString());
 
             string sResult = Newtonsoft.Json.JsonConvert.SerializeObject(t);
 
             return Content(sResult, "application/json");
         }
+
     }
 }

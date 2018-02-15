@@ -18,14 +18,14 @@
             <label ng-bind="r.indexval"></label>
             <div class="input-group">
                 <div class="input-group-btn">
-                    <select class="form-control" style="width:100px">
+                    <select class="form-control" style="width:100px" ng-model="r.operator">
                         <option value="">--Select--</option>
                         <option value="Like">Like</option>
                         <option value="Comma Seprated">Comma Seprated</option>
                         <option value="=">Equals</option>
                     </select>
                 </div>
-                <input type="text" class="form-control" />
+                <input type="text" class="form-control" ng-model="r.val"/>
             </div>
             
         </div>
