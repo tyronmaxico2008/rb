@@ -5,9 +5,15 @@
 
 @section  headerContent {
     <script src="~/Scripts/report.js"></script>
-
+    
 }
 
+    <script>
+        $(function () {
+            $("#frmdatepicker").datepicker({ dateFormat: "yy-mm-dd" });
+            $("#todatepicker").datepicker({ dateFormat: "yy-mm-dd" });
+        });
+    </script>
 
 <div class="row" ng-app="myApp" ng-controller="report">
     <div class="col-md-12">
@@ -16,25 +22,128 @@
                 Report View
             </div>
             <div class="panel-body">
-                <div class="form-group col-md-4">
-                    <label>Main Tag</label>
-                    <select class="form-control" ng-model="row_filter.mainTag_id" ng-options="r.maintagid as  r.maintagval for r in drp_maintag" ng-change="loadSubTag()">
-                        <option>--Select--</option>
-                    </select>
-                </div>
+                <b>Report Location wise</b>
 
-                @*<div class="form-group col-md-4">
+                <div style="border: 1px solid #ccc">
+
+                    <div class="form-group col-md-4">
+                        <label>Main Tag</label>
+                        <select class="form-control" ng-model="row_filter.mainTag_id" ng-options="r.maintagid as  r.maintagval for r in drp_maintag" ng-change="loadSubTag()">
+                            <option>--Select--</option>
+                        </select>
+                    </div>
+
+                    @*<div class="form-group col-md-4">
                     <label>Sub Tag</label>
                     <select class="form-control" ng-model="row_filter.subTag_id" ng-options="r.subtagid as  r.subtagval for r in drp_subtag">
                         <option value="">--Select--</option>
                     </select>
                 </div>*@
-                <div class="form-group">
-                    <br />
-                    <button class="btn btn-primary" ng-click="fetchReport()">Fetch</button>
+                    <div class="col-md-4">
+                        <label>Doc Location</label>
+                        <select class="form-control" ng-model="row_filter.docLocation" ng-disabled="inProcess">
+                            <option>Mumbai</option>
+                            <option>Ahmedabad</option>
+                            <option>Indore</option>
+                            <option>Surat</option>
+                            <option>Pune</option>
+                            <option>Nagpur</option>
+                            <option>Goa</option>
+                            <option>Hubli</option>
+                            <option>Bangalore</option>
+                            <option>Salem</option>
+                            <option>Guntur</option>
+                            <option>Hyderabad</option>
+                            <option>Chennai</option>
+                            <option>Madurai</option>
+                            <option>Pondichery</option>
+                            <option>Cochin</option>
+                            <option>Mallapuram</option>
+                            <option>Kolkata RDC</option>
+                            <option>Kolkata</option>
+                            <option>Durgapur</option>
+                            <option>Raipur</option>
+                            <option>Bhubaneswar</option>
+                            <option>Guwahati</option>
+                            <option>Patna</option>
+                            <option>Ranchi</option>
+                            <option>FARIDABAD</option>
+                            <option>BUDHPUR, BIJAPUR ND</option>
+                            <option>PARWANOO,HP</option>
+                            <option>JAIPUR,RJ</option>
+                            <option>CHANDIGARH</option>
+                            <option>DEHRADUN,UK</option>
+                            <option>BANUR,MOHALI</option>
+                            <option>LUCKNOW,UP</option>
+                            <option>GHAZIABAD,UP</option>
+                            <option>PALWAL,HR</option>
+                            <option>JAMMU</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <br />
+                        <button class="btn btn-primary" ng-click="fetchReport()">Fetch</button>
+                    </div>
                 </div>
+                <br />
+                @*<b>Report User wise</b>
+                <div style="border: 1px solid #ccc;clear:both;">
+                    
+                    <div class="form-group col-md-4">
+                        <label>Main Tag</label>
+                        <select class="form-control" ng-model="row_filter.mainTag_id" ng-options="r.maintagid as  r.maintagval for r in drp_maintag" ng-change="loadSubTag()">
+                            <option>--Select--</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                    <label>User</label>
+                    <select class="form-control" ng-model="row_filter.uid" ng-options="r.uid as  r.uname for r in drp_users">
+                        <option value="">--Select--</option>
+                    </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <br />
+                        <button class="btn btn-primary" ng-click="fetchReportUserWise()">Fetch</button>
+                    </div>
+                </div>*@
+                @*<br />
+
+                <b>Document Count User wise</b>
+                <div style="border: 1px solid #ccc; clear: both;">
+                    <br />
+                    <div class="form-group col-md-4">
+                        <label>From Date</label>
+                        <input type="text" class="form-control" id="frmdatepicker" ng-model="frmdatepicker" readonly="readonly"/>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>To Date</label>
+                        <input type="text" class="form-control" id="todatepicker" ng-model="todatepicker" readonly="readonly"/>
+                    </div>
+                    <div class="form-group">
+                        <br />
+                        <button class="btn btn-primary" ng-click="fetchReportDocumentWise()">Fetch</button>
+                    </div>
+                    <table style="clear: both" class="table table-bordered table-hover" ng-hide="tabshow">
+                        <tr>
+                            <th>User Name</th>
+                            <th>Total No of Pages Done</th>
+                            <th>Total No of Files Done</th>
+                            <th>Entry Date</th>
+                        </tr>
+                        <tr ng-repeat="r in usr">
+                            <td><span ng-bind="r.uname"></span></td>
+                            <td><span ng-bind="r.pagecount"></span></td>
+                            <td><span ng-bind="r.totaldoc"></span></td>
+                            <td><span ng-bind="r.entrydate | date:'MM/dd/yyyy'""></span></td>
+                        </tr>
+                    </table>
+                </div>*@
             </div>
         </div>
     </div>
 </div>
+
 

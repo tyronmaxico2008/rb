@@ -1,0 +1,140 @@
+﻿@{
+    ViewBag.Title = "CreateUser";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+@section  headerContent {
+    <script src="~/Scripts/user.js"></script>
+
+}
+
+<div class="row" ng-app="myApp" ng-controller="user">
+
+
+    <div class="col-md-12">
+        <button type="button" class="btn btn-default btn-md" data-toggle="modal" data-target="#divSaveEntry" style="float:right">Create User</button>
+
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>User ID</th>
+                    <th>Email</th>
+                    <th>Mobile</th>
+                    <th width="10%"><i class="fa fa-gear"></i>&nbsp;Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="r in grd.rows">
+                    <td>
+                        <span ng-bind="r.name"></span>
+                    </td>
+                    <td>
+                        <span ng-bind="r.userid"></span>
+                    </td>
+                    <td>
+                        <span ng-bind="r.email"></span>
+                    </td>
+                    <td>
+                        <span ng-bind="r.mobile"></span>
+                    </td>
+                    <td>
+                        <a href="javascript:;" ng-click="grd.edit2(r)"><i class="fa fa-edit"></i></a>
+                        <a href="javascript:;"><i class="fa fa-trash-o"></i></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <pager grd="grd"></pager>
+
+
+        <div class="modal fade" tabindex="-1" role="dialog" id="divEntry">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">User Entry</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" class="form-control" ng-model="grd.row.name" readonly="readonly"/>
+                        </div>
+                        <div class="form-group">
+                            <label>User ID</label>
+                            <input type="text" class="form-control" ng-model="grd.row.userid" readonly="readonly"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="text" class="form-control" ng-model="grd.row.pwd" />
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="text" class="form-control" ng-model="grd.row.email" />
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fa fa-mobile"></i>&nbsp;Mobile</label>
+                            <input type="tel" class="form-control" ng-model="grd.row.mobile" />
+                        </div>
+                        <div class="form-group">
+                            <label>Remarks</label>
+                            <textarea ng-model="grd.row.remarks" rows="3" class="form-control" ></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary"><i class="fa fa-save"></i>&nbsp;Save</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+
+        @*<div class="modal fade" tabindex="-1" role="dialog" id="divSaveEntry">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">User Entry</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" class="form-control" ng-model="savname" />
+                        </div>
+                        <div class="form-group">
+                            <label>User ID</label>
+                            <input type="text" class="form-control" ng-model="savuserid" "/>
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="text" class="form-control" ng-model="savpwd" />
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" class="form-control" ng-model="savemail" />
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fa fa-mobile"></i>&nbsp;Mobile</label>
+                            <input type="tel" class="form-control" ng-model="savmob" Maxlength="10"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Remarks</label>
+                            <textarea ng-model="savremark" rows="3" class="form-control" ></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" ng-click="save()"><i class="fa fa-save"></i>&nbsp;Save</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>*@
+
+    </div>
+</div>

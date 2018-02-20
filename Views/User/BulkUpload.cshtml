@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "BulkUpload";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+@section  headerContent {
+    <script src="~/Scripts/report.js"></script>
+
+}
+
+
+<div class="row" ng-app="myApp" ng-controller="bulkupload">
+    <div class="col-md-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Bulk Upload
+            </div>
+            <div class="panel-body">
+                <div class="form-group col-md-4">
+                    <label>Select File</label>
+                    <input type="file" file-model="row_csv.file" />
+                </div>
+
+                <div class="form-group">
+                    <br />
+                    <button class="btn btn-default" ng-click="bulkUpload()">Upload</button>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+

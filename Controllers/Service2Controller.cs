@@ -127,7 +127,7 @@ namespace Whirlpool_logistics.Controllers
                     if (!string.IsNullOrWhiteSpace(r["val"].ToString()))
                     {
                         //sbIn.AppendFormat(" and subtagid = {0} and val Like '%{1}%' ", r["subtagid"], r["val"].ToString());
-                        sbIn.AppendFormat("  and val Like '%{0}%' ", r["val"].ToString());
+                        sbIn.AppendFormat("  or val Like '%{0}%' ", r["val"].ToString());
                     }
 
                 }
@@ -143,6 +143,11 @@ namespace Whirlpool_logistics.Controllers
            
         }
 
-
+        [HttpPost]
+        public ActionResult user_list()
+        {
+            DataTable t = getData("select  * from sysUser");
+            return getPagingData(t, start, length) ;
+        }
     }
 }

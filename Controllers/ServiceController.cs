@@ -8,6 +8,8 @@ using System.Configuration;
 using System.Data;
 using System.Text;
 using Whirlpool_logistics.Models;
+using System.IO;
+using System.Globalization;
 
 
 namespace Whirlpool_logistics.Controllers
@@ -21,6 +23,13 @@ namespace Whirlpool_logistics.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+
+        public ActionResult getUserList()
+        {
+            DataTable t = getData("select * from Users ");
+            string sResult = Newtonsoft.Json.JsonConvert.SerializeObject(t);
+            return Content(sResult, "application/json");
         }
 
         public ActionResult getMaintagList()
@@ -270,26 +279,9 @@ namespace Whirlpool_logistics.Controllers
                 //cmd.Parameters.AddWithValue("subtagid", iSubTagID);
                 cmd.Parameters.AddWithValue("docLocation", docLocation);
                 cmd.Parameters.AddWithValue("userid", Session["userid"].ToString());
-                int iID = Convert.ToInt32(cmd.ExecuteScalar());
-
-                /////////mFile Record updated
 
 
-                //cmd.Parameters.Clear();
-                //cmd.CommandText = "exec mFile_inserIndexField " + iID;
                 cmd.ExecuteNonQuery();
-
-                //DataTable tblIndexField = Newtonsoft.Json.JsonConvert.DeserializeObject<DataTable>(json_data);
-
-                //foreach (DataRow r in tblIndexField.Rows)
-                //{
-                //    var cmd2 = conn.CreateCommand();
-                //    cmd2.CommandText = "update pageIndexData set val = @val where mFileID = @mFileID and index_id = @index_id ";
-                //    cmd2.Parameters.AddWithValue("index_id", r["indexid"]);
-                //    cmd2.Parameters.AddWithValue("mFileID", iID);
-                //    cmd2.Parameters.AddWithValue("val", r["val"].ToString());
-                //    cmd2.ExecuteNonQuery();
-                //}
 
                 var oPDF = new bll.clsPDF();
                 oPDF.deletePage(fileBarCode, imageName, Convert.ToInt32(currentPage));
@@ -308,7 +300,33 @@ namespace Whirlpool_logistics.Controllers
             }
             try
             {
-                string s = "Select * from vpageIndexData where maintagid='" + Request.Form["maintagid"] + "'";
+                string s = "Select * from vpageIndexData where maintagid='" + Request.Form["maintagid"] + "'and docLocation='" + Request.Form["docLocation"] + "'";
+                DataTable t = getData(s);
+                Session["reportData"] = t;
+                if (t.Rows.Count > 0)
+                    return Json(new { msg = "", result = true }, JsonRequestBehavior.AllowGet);
+                else
+                {
+                    return Json(new { msg = "", result = false }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { msg = ex.Message, result = false }, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+        [HttpPost]
+        public ActionResult setViewDataUserWise()
+        {
+            if (string.IsNullOrWhiteSpace(Request.Form["maintagid"]))
+            {
+                return Json(new { msg = "Please specify Main Tag !", result = false }, JsonRequestBehavior.AllowGet);
+            }
+            try
+            {
+                string s = "Select * from vpageIndexData where maintagid='" + Request.Form["maintagid"] + "'and uid='" + Request.Form["uid"] + "'";
                 DataTable t = getData(s);
                 Session["reportData"] = t;
                 if (t.Rows.Count > 0)
@@ -412,6 +430,229 @@ namespace Whirlpool_logistics.Controllers
             StringBuilder sb1 = new StringBuilder();
 
             sb1.AppendFormat("select * from vpageIndexData where 1 = 1 and mFileId=" + Request.Form["id"]);
+            DataTable t = getData(sb1.ToString());
+
+            string sResult = Newtonsoft.Json.JsonConvert.SerializeObject(t);
+
+            return Content(sResult, "application/json");
+        }
+
+        [HttpPost]
+        public ActionResult create_user()
+        {
+            var st = Request.Form["savname"];
+
+            if (string.IsNullOrWhiteSpace(Request.Form["savname"]))
+            {
+                return Json(new { msg = "Please specify Name !", result = false }, JsonRequestBehavior.AllowGet);
+            }
+            if (string.IsNullOrWhiteSpace(Request.Form["savuserid"]))
+            {
+                return Json(new { msg = "Please specify userid !", result = false }, JsonRequestBehavior.AllowGet);
+            }
+            if (string.IsNullOrWhiteSpace(Request.Form["savpwd"]))
+            {
+                return Json(new { msg = "Please specify password !", result = false }, JsonRequestBehavior.AllowGet);
+            }
+            if (string.IsNullOrWhiteSpace(Request.Form["savemail"]))
+            {
+                return Json(new { msg = "Please specify email !", result = false }, JsonRequestBehavior.AllowGet);
+            }
+            if (string.IsNullOrWhiteSpace(Request.Form["savmob"]))
+            {
+                return Json(new { msg = "Please specify Mobile number !", result = false }, JsonRequestBehavior.AllowGet);
+            }
+
+
+            string uname = Request.Form["name"];
+            string userid = Request.Form["userid"];
+            string pwd = Request.Form["pwd"];
+            string email = Request.Form["email"];
+            string mob = Request.Form["mob"];
+            string remark = Request.Form["remark"];
+
+            //Duplicate validation
+            DataTable tFile = getData("select * from sysUser where userid = '" + userid + "'");
+
+            if (tFile.Rows.Count > 0)
+            {
+                string sMsg = string.Format("The userid already exists [{0}] !", userid);
+                return Json(new { msg = sMsg, result = false }, JsonRequestBehavior.AllowGet);
+            }
+
+
+            using (SqlConnection conn = new SqlConnection(getConnectionString()))
+            {
+                conn.Open();
+                var cmd = conn.CreateCommand();
+                cmd.CommandText = "insert into sysUser (uname,userid,email,mobile,pwd,remarks) Values(@uname,@userid,@email,@mobile,@pwd,@remarks)";
+                cmd.CommandText += "\r\n  select SCOPE_IDENTITY() ";
+
+                cmd.Parameters.AddWithValue("@uname", uname);
+                cmd.Parameters.AddWithValue("@userid", userid);
+                cmd.Parameters.AddWithValue("@email", email);
+                cmd.Parameters.AddWithValue("mobile", mob);
+                cmd.Parameters.AddWithValue("pwd", pwd);
+                cmd.Parameters.AddWithValue("remarks", remark);
+                cmd.ExecuteNonQuery();
+
+            }
+
+
+            return Json(new { msg = "", result = true }, JsonRequestBehavior.AllowGet);
+        }
+
+
+        [HttpPost]
+        public ActionResult update_indexField()
+        {
+
+            if (string.IsNullOrWhiteSpace(Request.Form["maintagid"]) || string.IsNullOrWhiteSpace(Request.Form["subtagid"]))
+            {
+                return Json(new { msg = "Please specify Main Tag and Sub Tag !", result = false }, JsonRequestBehavior.AllowGet);
+            }
+
+
+            string id = Request.Form["id"];
+            int iMainTagID = Convert.ToInt32(Request.Form["maintagid"]);
+            int iSubTagID = Convert.ToInt32(Request.Form["subtagid"]);
+            string json_data = Request.Form["indexField"];
+
+
+            using (SqlConnection conn = new SqlConnection(getConnectionString()))
+            {
+                conn.Open();
+                var cmd = conn.CreateCommand();
+                cmd.CommandText = "update mfile set maintagid=@maintagid, subtagid=@subtagid, userid=@userid where id=@id";
+                //cmd.CommandText += "\r\n  select SCOPE_IDENTITY() ";
+
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("maintagid", iMainTagID);
+                cmd.Parameters.AddWithValue("subtagid", iSubTagID);
+                cmd.Parameters.AddWithValue("userid", Session["userid"].ToString());
+
+                int iID = Convert.ToInt32(cmd.ExecuteScalar());
+
+                /////////mFile Record updated
+
+                //update index
+                var cmd3 = conn.CreateCommand();
+                cmd3.CommandText = "delete from pageIndexData where mFileID=@id";
+                cmd3.Parameters.AddWithValue("@id", id);
+                cmd3.ExecuteNonQuery();
+
+                //update ends
+
+                cmd.Parameters.Clear();
+                cmd.CommandText = "exec mFile_inserIndexField " + id;
+                cmd.ExecuteNonQuery();
+
+                DataTable tblIndexField = Newtonsoft.Json.JsonConvert.DeserializeObject<DataTable>(json_data);
+
+                foreach (DataRow r in tblIndexField.Rows)
+                {
+                    var cmd2 = conn.CreateCommand();
+                    cmd2.CommandText = "update pageIndexData set val = @val where mFileID = @mFileID and index_id = @index_id ";
+                    cmd2.Parameters.AddWithValue("index_id", r["indexid"]);
+                    cmd2.Parameters.AddWithValue("mFileID", id);
+                    cmd2.Parameters.AddWithValue("val", r["val"].ToString());
+                    cmd2.ExecuteNonQuery();
+                }
+
+            }
+
+
+            return Json(new { username = "", result = true }, JsonRequestBehavior.AllowGet);
+        }
+
+
+        public DataTable getCSVData(string sPath)
+        {
+            string CSVFilePathName = sPath;
+            string[] Lines = System.IO.File.ReadAllLines(CSVFilePathName);
+            string[] Fields;
+            Fields = Lines[0].Split(new char[] { ',' });
+            int Cols = Fields.GetLength(0);
+            DataTable dt = new DataTable();
+            //1st row must be column names; force lower case to ensure matching later on.
+            for (int i = 0; i < Cols; i++)
+                dt.Columns.Add(Fields[i].ToLower(), typeof(string));
+            DataRow Row;
+            for (int i = 1; i < Lines.GetLength(0); i++)
+            {
+                Fields = Lines[i].Split(new char[] { ',' });
+                Row = dt.NewRow();
+                for (int f = 0; f < Cols; f++)
+                    Row[f] = Fields[f];
+                dt.Rows.Add(Row);
+            }
+
+            return dt;
+        }
+
+        [HttpPost]
+        public ActionResult bulkUpload()
+        {
+            if (Request.Files.Count > 0)
+            {
+                //string tempPath = Path.GetTempPath();
+                string tempPath = Server.MapPath("~/tmp") + "\\dump" + DateTime.Now.ToString("yyyy-MMM-dd-HHmmss") + ".csv";
+                Request.Files[0].SaveAs(tempPath);
+                DataTable t = getCSVData(tempPath);
+
+                using (SqlConnection conn = new SqlConnection(getConnectionString()))
+                {
+                    //conn.Open();
+                    //var cmd = conn.CreateCommand();
+                    //cmd.CommandText = "insert into dump (BoxBarcode,FileBarcode,InvoiceNo,InvoiceDate,SRNNo,SRNDate,ARADocNo,ARACity,STNNo,STNDate,STNFrom,STNTo,LRNo,Comment,BillingLocation,CustomerName,SANNo,InventoryAdj,SANA,docLocation) values (@BoxBarcode,@FileBarcode,@InvoiceNo,@InvoiceDate,@SRNNo,@SRNDate,@ARADocNo,@ARACity,@STNNo,@STNDate,@STNFrom,@STNTo,@LRNo,@Comment,@BillingLocation,@CustomerName,@SANNo,@InventoryAdj,@SANA,@docLocation)";
+
+                    using (SqlBulkCopy sqlBulkCopy = new SqlBulkCopy(conn))
+                    {
+                        //Set the database table name
+                        sqlBulkCopy.DestinationTableName = "dbo.Dump";
+
+                        //[OPTIONAL]: Map the DataTable columns with that of the database table
+                        sqlBulkCopy.ColumnMappings.Add("Box Barcode", "BoxBarcode");
+                        sqlBulkCopy.ColumnMappings.Add("FileBarcode", "FileBarcode");
+                        sqlBulkCopy.ColumnMappings.Add("Sales Invoice No", "InvoiceNo");
+                        sqlBulkCopy.ColumnMappings.Add("Sales Invoice Date", "InvoiceDate");
+                        sqlBulkCopy.ColumnMappings.Add("SRN No", "SRNNo");
+                        sqlBulkCopy.ColumnMappings.Add("SRN Date", "SRNDate");
+                        sqlBulkCopy.ColumnMappings.Add("ARA Doc No", "ARADocNo");
+                        sqlBulkCopy.ColumnMappings.Add("ARA City", "ARACity");
+                        sqlBulkCopy.ColumnMappings.Add("STN No", "STNNo");
+                        sqlBulkCopy.ColumnMappings.Add("STN Date", "STNDate");
+                        sqlBulkCopy.ColumnMappings.Add("STN From", "STNFrom");
+                        sqlBulkCopy.ColumnMappings.Add("STN To", "STNTo");
+                        sqlBulkCopy.ColumnMappings.Add("LRNo", "LRNo");
+                        sqlBulkCopy.ColumnMappings.Add("Comment", "Comment");
+                        sqlBulkCopy.ColumnMappings.Add("Billing Location", "BillingLocation");
+                        sqlBulkCopy.ColumnMappings.Add("Customer Name", "CustomerName");
+                        sqlBulkCopy.ColumnMappings.Add("Inventory Adj", "InventoryAdj");
+                        sqlBulkCopy.ColumnMappings.Add("SAN A", "SANA");
+                        sqlBulkCopy.ColumnMappings.Add("Location", "docLocation");
+                        conn.Open();
+                        sqlBulkCopy.WriteToServer(t);
+                        conn.Close();
+                    }
+
+
+                }
+
+            }
+
+            return Json(new { bulkdata = "", result = true }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult setViewDataDocumentWise()
+        {
+            string frmdate = (Request.Form["frmdatepicker"].ToString());
+            string todate = Request.Form["todatepicker"].ToString();
+
+            StringBuilder sb1 = new StringBuilder();
+
+            sb1.AppendFormat("select users.uname,COUNT(distinct mfileID) as pagecount, COUNT (DISTINCT filebarcode) as totaldoc,entrydate from vpageIndexData left join users on vpageIndexData.uid=users.uid where entrydate between '" + frmdate + "' and '" + todate + "' group by users.uname,vpageindexdata.entrydate");
             DataTable t = getData(sb1.ToString());
 
             string sResult = Newtonsoft.Json.JsonConvert.SerializeObject(t);

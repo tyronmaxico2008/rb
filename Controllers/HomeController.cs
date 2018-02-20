@@ -37,7 +37,10 @@ namespace Whirlpool_logistics.Controllers
             return View();
         }
 
-
+        public ActionResult userReportView()
+        {
+            return View();
+        }
 
         public ActionResult searchDoc()
         {

@@ -105,6 +105,34 @@ myApp.controller("searchDoc", function ($scope, $http) {
         $("#divViewPDF").modal("show");
     }
 
+    $scope.editRowData = function (r) {
+        $scope.current_row = r;
+        jnPost = { id: $scope.current_row.id };
+        ng_post($http, "../Service/fetchIndexField", jnPost, function (row) {
+            $scope.datares = row;
+        });
+        $("#divViewEdit").modal("show");
+    }
+
+
+    $scope.update_indexfield = function () {
+        jnPost = { id: $scope.current_row.id }
+        jnPost["maintagid"] = $scope.row_filter.mainTag_id;
+        jnPost["subtagid"] = $scope.row_filter.subTag_id;
+        jnPost['indexField'] = JSON.stringify($scope.indexfield);
+        
+        ng_post($http, "../Service/update_indexField", jnPost, function (res) {
+            if (res.result == true) {
+                alert("Operation done successfully.");
+                
+            }
+            else {
+                alert(res.msg);
+            }
+
+
+        });
+    }
     //change ends
     //alert("Hiii");
 

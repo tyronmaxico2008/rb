@@ -11,7 +11,10 @@
     <script src="~/Assets/bootstrap3/js/bootstrap.min.js"></script>
     <link href="~/Assets/bootstrap3/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-
+    
+    <link href="~/css/jquery-ui.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-ui.js"></script>
+    
     <link href="~/css/Style.css" rel="stylesheet" />
     <script src="~/Scripts/ngCore/ngGRID.js"></script>
     <script src="~/Scripts/ngInit.js"></script>
@@ -23,7 +26,7 @@
 
         <nav class="navbar navbar-default navbar-static-top ">
             <div class="navbar-header">
-                <a href="../System/Dashboard">
+                <a href="../Home/Index">
                     <img class="img img-thumbnail" src="/Images/writer-home-logo.png" id="imgLogo" style="margin: 2px; height: 45px" />
                 </a>
             </div>
@@ -39,9 +42,12 @@
 
 
                         <ul class="dropdown-menu">
-                           @* <li><a href="#"><i class="fa fa-edit"></i>&nbsp;Edit Profile</a></li>
+                            @* <li><a href="#"><i class="fa fa-edit"></i>&nbsp;Edit Profile</a></li>
                             <li class="divider"></li>*@
+                            
+                            
                             <li><a href="../Home/Logout"><i class="fa fa-sign-out"></i>&nbsp;Log Out</a></li>
+
                         </ul>
                     </li>
                 </ul>
@@ -51,21 +57,37 @@
                 <ul class="nav navbar-nav">
 
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-file-pdf-o"></i>&nbsp;Tagging <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-tags"></i>&nbsp;Tagging <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="../Home/Index"><i class="fa fa-file-excel-o"></i>&nbsp;Tag Document</a></li>
+                            <li><a href="../Home/Index"><i class="fa fa-tag"></i>&nbsp;Tag Document</a></li>
                         </ul>
                     </li>
-                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-file-pdf-o"></i>&nbsp;Search <span class="caret"></span></a>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-search"></i>&nbsp;Search <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="../Home/searchDoc"><i class="fa fa-file-excel-o"></i>&nbsp;Document Search</a></li>
+                            <li><a href="../Home/searchDoc"><i class="fa fa-search"></i>&nbsp;Document Search</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-file-pdf-o"></i>&nbsp;Report <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="../Home/ReportView"><i class="fa fa-file-excel-o"></i>&nbsp;Tag Report</a></li>
+                            <li><a href="../Home/userReportView"><i class="fa fa-file-excel-o"></i>&nbsp;User Tag Report</a></li>
+                        </ul>
+                        
+                    </li>
+                     <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i>&nbsp;USer Management <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../User/CreateUser"><i class="fa fa-users"></i>&nbsp;Create User</a></li>
+                        
+                             <li><a href="../User/CreateRole"><i class="fa fa-sitemap"></i>&nbsp;Create Role</a></li>
+                         </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-upload"></i>&nbsp;Bulk Upload <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../User/BulkUpload"><i class="fa fa-file-excel-o"></i>&nbsp;Bulk Upload</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -78,7 +100,7 @@
         @RenderBody()
 
     </div>
-   
+
 
     <!-- <footer class="footer">
         &copy; Writer Corporation @DateTime.Now.Year

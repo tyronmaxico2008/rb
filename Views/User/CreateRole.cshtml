@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "CreateRole";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+@section  headerContent {
+    <script src="~/Scripts/user.js"></script>
+
+}
+
+<div class="row" ng-app="myApp" ng-controller="role">
+    <div class="col-md-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Report View
+            </div>
+            <div class="panel-body">
+                <div class="form-group col-md-4">
+                    <label>Main Tag</label>
+                    <select class="form-control" ng-model="row_filter.mainTag_id" ng-options="r.maintagid as  r.maintagval for r in drp_maintag" ng-change="loadSubTag()">
+                        <option>--Select--</option>
+                    </select>
+                </div>
+
+                @*<div class="form-group col-md-4">
+                    <label>Sub Tag</label>
+                    <select class="form-control" ng-model="row_filter.subTag_id" ng-options="r.subtagid as  r.subtagval for r in drp_subtag">
+                        <option value="">--Select--</option>
+                    </select>
+                </div>*@
+                <div class="form-group">
+                    <br />
+                    <button class="btn btn-primary" ng-click="fetchReport()">Fetch</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

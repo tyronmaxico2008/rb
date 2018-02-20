@@ -1,0 +1,57 @@
+﻿@{
+    ViewBag.Title = "userReportView";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+@section  headerContent {
+    <script src="~/Scripts/report.js"></script>
+
+}
+
+<script>
+    $(function () {
+        $("#frmdatepicker").datepicker({ dateFormat: "yy-mm-dd" });
+        $("#todatepicker").datepicker({ dateFormat: "yy-mm-dd" });
+    });
+</script>
+
+<div class="row" ng-app="myApp" ng-controller="userReport">
+    <div class="col-md-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Document Count User wise
+            </div>
+            <div class="panel-body">
+                <div>
+                    <br />
+                    <div class="form-group col-md-4">
+                        <label>From Date</label>
+                        <input type="text" class="form-control" id="frmdatepicker" ng-model="frmdatepicker" readonly="readonly"/>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>To Date</label>
+                        <input type="text" class="form-control" id="todatepicker" ng-model="todatepicker" readonly="readonly"/>
+                    </div>
+                    <div class="form-group">
+                        <br />
+                        <button class="btn btn-primary" ng-click="fetchReportDocumentWise()">Fetch</button>
+                    </div>
+                    <table style="clear: both" class="table table-bordered table-hover" ng-hide="tabshow">
+                        <tr>
+                            <th>User Name</th>
+                            <th>Total No of Pages Done</th>
+                            <th>Total No of Files Done</th>
+                            <th>Entry Date</th>
+                        </tr>
+                        <tr ng-repeat="r in usr">
+                            <td><span ng-bind="r.uname"></span></td>
+                            <td><span ng-bind="r.pagecount"></span></td>
+                            <td><span ng-bind="r.totaldoc"></span></td>
+                            <td><span ng-bind="r.entrydate | date:'MM/dd/yyyy'""></span></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

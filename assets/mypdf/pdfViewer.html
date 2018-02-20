@@ -19,8 +19,8 @@
                     <a href="javascript:;" ng-click="previous()"><i class="fa fa-arrow-left"></i></a>
                     &nbsp;<span class="badge badger-danger" ng-bind="currentPage"></span>&nbsp;
                     <a  href="javascript:;" ng-click="next()"><i class="fa fa-arrow-right"></i></a>
-                    &nbsp;<a  href="javascript:;" ng-click="rotateleft()"><i class="fa fa-rotate-left"></i></a>
-                    &nbsp;<a  href="javascript:;" ng-click="rotateright()"><i class="fa fa-rotate-right"></i></a>
+                  <!--  &nbsp;<a  href="javascript:;" ><i class="fa fa-rotate-left"></i></a>
+                    &nbsp;<a  href="javascript:;" ><i class="fa fa-rotate-right"></i></a>-->
                 </td>
             </tr>
             <tr>
@@ -35,7 +35,7 @@
 <div class="row pdfContainer" >
      
     <div class="col-md-12" style="text-align: center;background-color: darkgray">
-         <div ng-repeat="tag in drg.tags"  class="drg" ng-style="{ left : tag.x, top : tag.y, width : tag.width,height : tag.height }">
+         <div ng-repeat="tag in drg.tags"  class="drg" ng-style=" { left : tag.x, top : tag.y, width : tag.width, height : tag.height, transform : transform() }">
             <span ng-bind="tag.text"></span>
         </div>
        

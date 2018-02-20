@@ -138,6 +138,7 @@
     <Compile Include="Controllers\ServiceController.cs" />
     <Compile Include="Controllers\SystemController.cs" />
     <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -185,6 +186,7 @@
     <Content Include="css\bootstrap-reboot.min.css" />
     <Content Include="css\bootstrap.css" />
     <Content Include="css\bootstrap.min.css" />
+    <Content Include="css\jquery-ui.css" />
     <Content Include="css\signin.css" />
     <Content Include="css\Style.css" />
     <Content Include="Global.asax" />
@@ -193,6 +195,7 @@
     <Content Include="Scripts\angular.min.1.6.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\grid_test.js" />
+    <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery.js" />
     <Content Include="Scripts\login.js" />
     <Content Include="Scripts\ngCore\ngGRID.js" />
@@ -200,6 +203,7 @@
     <Content Include="Scripts\ngInit.js" />
     <Content Include="Scripts\report.js" />
     <Content Include="Scripts\test.js" />
+    <Content Include="Scripts\user.js" />
     <Content Include="Scripts\viewDoc.js" />
     <Content Include="Scripts\views\docFilter.html" />
     <Content Include="Web.config" />
@@ -214,6 +218,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="obj\Debug\TempPE\" />
+    <Folder Include="tmp\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -293,6 +298,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Test\grid.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\PublishProfiles\Whirlpool_logistics.pubxml" />
+    <Content Include="Views\User\CreateUser.cshtml" />
+    <Content Include="Views\User\CreateRole.cshtml" />
+    <Content Include="Views\User\BulkUpload.cshtml" />
+    <Content Include="Views\Home\userReportView.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

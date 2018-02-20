@@ -29,6 +29,26 @@ myApp.directive("pager", function () {
     }
 });
 
+myApp.directive('fileModel', ['$parse', function ($parse) {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+
+            var model = $parse(attrs.fileModel);
+            var modelSetter = model.assign;
+
+            var iSize = (attrs.size || 2);
+
+
+            element.bind('change', function () {
+                scope.$apply(function () {
+                    modelSetter(scope, element[0].files[0]);
+                });
+            });
+        }
+    };
+}]);
+
 
 function ngGrid($http, sGetPath) {
 
@@ -86,7 +106,7 @@ function ngGrid($http, sGetPath) {
 
 
     this.edit = function (r) {
-        this.row = clone(r);
+        this.row = r;
     }
 
 
@@ -523,9 +543,9 @@ function ngCRUD(bll, sGetPath, sSavePath, sDeletePath, PrimaryKeyField) {
     //    grd.exec(ActionName, e, callback);
     //}
 
-    grd.edit = function (r) {
-        grd.row = clone(r);
-    }
+    //grd.edit = function (r) {
+    //    grd.row = clone(r);
+    //}
 
     grd.copy = function (r) {
         grd.row_copy = r == undefined ? clone(grd.row) : clone(r);
@@ -560,9 +580,9 @@ function ngCRUD(bll, sGetPath, sSavePath, sDeletePath, PrimaryKeyField) {
 
 
 
-function ngCRUD(bll, sGetPath, sSavePath, sDeletePath, PrimaryKeyField) {
+function ngCRUD($http, sGetPath, sSavePath, sDeletePath, PrimaryKeyField) {
 
-    var grd = new ngGrid(bll, sGetPath);
+    var grd = new ngGrid($http, sGetPath);
 
     grd.PrimaryKeyField = PrimaryKeyField;
 
@@ -615,7 +635,7 @@ function ngCRUD(bll, sGetPath, sSavePath, sDeletePath, PrimaryKeyField) {
     //}
 
     grd.edit = function (r) {
-        grd.row = clone(r);
+        grd.row = r;
     }
 
     grd.copy = function (r) {

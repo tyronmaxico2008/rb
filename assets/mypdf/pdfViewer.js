@@ -12,15 +12,22 @@ myApp.directive("pdfViewer", function () {
             $scope.currentPage = 1;
             $scope.totalPages = 0
             $scope.error = false;
+            $scope.degree = 90;
 
+            $scope.transform = function () {
+                return " rotate(" + $scope.degree + "deg)";
+            }
+
+            $scope.increase_degree = function () {
+                $scope.degree += 30;
+            }
+            $scope.decrease_degree = function () {
+                $scope.degree -= 30;
+            }
             //End
-
-
             var _pdf = null;
 
-
             var _loadPDF = function () {
-
                 if (!$scope.barCode) return;
                 var sLink = "../Service/fetchPDF?fileBarCode=" + $scope.barCode;
                 PDFJS.getDocument(sLink).then(function (pdf) {
@@ -34,7 +41,7 @@ myApp.directive("pdfViewer", function () {
 
             $scope.$watch('barCode', function () {
                 var barcode = ($scope.barCode || 0);
-                if ($.trim(barcode) != "" ) {
+                if ($.trim(barcode) != "") {
                     $scope.currentPage = 1;
                     _loadPDF();
                 }
@@ -42,15 +49,14 @@ myApp.directive("pdfViewer", function () {
 
             $scope.$watch('currentPage', function () {
                 debugger;
-                if ($scope.currentPage > 0)
-                {
+                if ($scope.currentPage > 0) {
                     _viewPage();
                 }
             });
 
 
             var _viewPage = function () {
-                _pdf.getPage(parseInt( $scope.currentPage)).then(function (page) {
+                _pdf.getPage(parseInt($scope.currentPage)).then(function (page) {
                     // you can now use *page* here
                     var scale = 1.5;
                     var viewport = page.getViewport(scale);
@@ -59,7 +65,7 @@ myApp.directive("pdfViewer", function () {
                     var context = canvas.getContext('2d');
                     canvas.height = viewport.height;
                     canvas.width = viewport.width;
-                    
+
 
                     var renderContext = {
                         canvasContext: context,
@@ -83,6 +89,10 @@ myApp.directive("pdfViewer", function () {
             }
 
             $scope.next = function () {
+                if ($scope.currentPage == $scope.totalPages) {
+                    alert("You are on the last page");
+                    return;
+                }
                 $scope.currentPage += 1;
                 _viewPage();
             }
@@ -97,14 +107,7 @@ myApp.directive("pdfViewer", function () {
                 _viewPage();
             }
 
-            $scope.rotateleft = function () {
-
-            }
-
-            $scope.rotateright = function () {
-
-            }
-
+           
         }
         , link: function (element) {
 

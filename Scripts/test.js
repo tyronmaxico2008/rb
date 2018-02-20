@@ -117,7 +117,7 @@ function tagging($scope, $http) {
             else {
                 $scope.inProcess = false;
                 alert("No record found !");
-                
+
             }
         });
     }
@@ -143,7 +143,7 @@ function tagging($scope, $http) {
         debugger;
         if ($scope.totalPages >= $scope.currentPage) {
             $scope.currentPage += 1;
-            $scope.row_filter = { docLocation: $scope.row_filter.docLocation };
+            $scope.row_filter = { mainTag_id: $scope.row_filter.mainTag_id, subTag_id: $scope.row_filter.subTag_id, docLocation: $scope.row_filter.docLocation };
         }
         else {
             $scope.getFileBarCodeData();
@@ -159,6 +159,48 @@ function tagging($scope, $http) {
         jnPost["subtagid"] = $scope.row_filter.subTag_id;
         jnPost['indexField'] = JSON.stringify($scope.indexfield);
         jnPost['docLocation'] = $scope.row_filter.docLocation;
+
+        ///////validation code
+        for (var i = 0; i < $scope.indexfield.length; i++) {
+            var r = $scope.indexfield[i];
+            //alert(r.indexval);
+            //alert(r.val)
+            //r['invoice']
+            if (r.indexval == "Invoice No" && r.val == "") {
+                alert("Please enter the invoice number");
+                return;
+            }
+            if (r.indexval == "Invoice Date" || r.indexval.trim() == "SRNDate" || r.indexval.trim() == "STNDate") {
+                var input = r.val;
+                var pattern = /^([0-9]{2})[- /.]([0-9]{2})[- /.]([0-9]{4})$/;
+                if (pattern.test(input) == false) {
+                    alert("Date is not in correct format");
+                    return;
+                }
+
+            }
+
+        }
+        //for (var i = 0; i < $scope.indexfield.length; i++) {
+        //    var r = $scope.indexfield[i];
+
+        //    //var input = '01.01.1997';
+        //    //
+        //    //var pattern = /^([0-9]{2})[- /.]([0-9]{2})[- /.]([0-9]{4})$/;
+        //    //
+        //    //alert(pattern.test(input));
+        //    if (r.indexval == "Invoice Date") {
+        //        var input = r.val;
+        //        var pattern = /^([0-9]{2})[- /.]([0-9]{2})[- /.]([0-9]{4})$/;
+        //        if (pattern.test(input) == false) {
+        //            alert("Date is not in correct format");
+        //            return;
+        //        }
+
+        //    }
+        //}
+
+        //////validation code ends here
 
         ng_post($http, "../Service/save_indexField", jnPost, function (res) {
             if (res.result == true) {
@@ -194,7 +236,14 @@ function tagging($scope, $http) {
         ng_post($http, "../Service/delete", jnPost, function (res) {
             if (res.result == true) {
                 alert("Operation done successfully.");
-                $scope.moveNextPage();
+                if ($scope.totalPages > $scope.currentPage) {
+                    $scope.moveNextPage();
+                }
+                else {
+                    $scope.inProcess = false;
+                    $scope.getbarcode = "";
+                    $scope.getFileBarCodeData();
+                }
             }
             else {
                 alert(res.msg);
