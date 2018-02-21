@@ -437,70 +437,7 @@ namespace Whirlpool_logistics.Controllers
             return Content(sResult, "application/json");
         }
 
-        [HttpPost]
-        public ActionResult create_user()
-        {
-            var st = Request.Form["savname"];
-
-            if (string.IsNullOrWhiteSpace(Request.Form["savname"]))
-            {
-                return Json(new { msg = "Please specify Name !", result = false }, JsonRequestBehavior.AllowGet);
-            }
-            if (string.IsNullOrWhiteSpace(Request.Form["savuserid"]))
-            {
-                return Json(new { msg = "Please specify userid !", result = false }, JsonRequestBehavior.AllowGet);
-            }
-            if (string.IsNullOrWhiteSpace(Request.Form["savpwd"]))
-            {
-                return Json(new { msg = "Please specify password !", result = false }, JsonRequestBehavior.AllowGet);
-            }
-            if (string.IsNullOrWhiteSpace(Request.Form["savemail"]))
-            {
-                return Json(new { msg = "Please specify email !", result = false }, JsonRequestBehavior.AllowGet);
-            }
-            if (string.IsNullOrWhiteSpace(Request.Form["savmob"]))
-            {
-                return Json(new { msg = "Please specify Mobile number !", result = false }, JsonRequestBehavior.AllowGet);
-            }
-
-
-            string uname = Request.Form["name"];
-            string userid = Request.Form["userid"];
-            string pwd = Request.Form["pwd"];
-            string email = Request.Form["email"];
-            string mob = Request.Form["mob"];
-            string remark = Request.Form["remark"];
-
-            //Duplicate validation
-            DataTable tFile = getData("select * from sysUser where userid = '" + userid + "'");
-
-            if (tFile.Rows.Count > 0)
-            {
-                string sMsg = string.Format("The userid already exists [{0}] !", userid);
-                return Json(new { msg = sMsg, result = false }, JsonRequestBehavior.AllowGet);
-            }
-
-
-            using (SqlConnection conn = new SqlConnection(getConnectionString()))
-            {
-                conn.Open();
-                var cmd = conn.CreateCommand();
-                cmd.CommandText = "insert into sysUser (uname,userid,email,mobile,pwd,remarks) Values(@uname,@userid,@email,@mobile,@pwd,@remarks)";
-                cmd.CommandText += "\r\n  select SCOPE_IDENTITY() ";
-
-                cmd.Parameters.AddWithValue("@uname", uname);
-                cmd.Parameters.AddWithValue("@userid", userid);
-                cmd.Parameters.AddWithValue("@email", email);
-                cmd.Parameters.AddWithValue("mobile", mob);
-                cmd.Parameters.AddWithValue("pwd", pwd);
-                cmd.Parameters.AddWithValue("remarks", remark);
-                cmd.ExecuteNonQuery();
-
-            }
-
-
-            return Json(new { msg = "", result = true }, JsonRequestBehavior.AllowGet);
-        }
+        
 
 
         [HttpPost]

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data;
 using System.Text;
+using System.Data.SqlClient;
 
 namespace Whirlpool_logistics.Controllers
 {
@@ -59,8 +60,8 @@ namespace Whirlpool_logistics.Controllers
             }
         }
 
-        
-        
+
+
         public ActionResult Index()
         {
             return View();
@@ -72,7 +73,7 @@ namespace Whirlpool_logistics.Controllers
         }
 
 
-        private ContentResult getPagingData(DataTable t,int _Start,int _Length)
+        private ContentResult getPagingData(DataTable t, int _Start, int _Length)
         {
 
             var result = new { recordsTotal = t.Rows.Count, data = g.GetTableRows(t, _Start * _Length, _Length) };
@@ -84,12 +85,12 @@ namespace Whirlpool_logistics.Controllers
 
         public ContentResult sysobjects(FormCollection frm)
         {
-         
-   
+
+
             DataTable t = getData("select * from sysObjects");
             //var t = _oBL.getGridJson(sModuleName, sSubModuleName, sSortType, draw, start, length, cmd);
             return getPagingData(t, start, length);
-            
+
         }
 
 
@@ -140,14 +141,109 @@ namespace Whirlpool_logistics.Controllers
             DataTable t = getData(sb1.ToString());
 
             return getPagingData(t, start, length);
-           
+
         }
 
         [HttpPost]
         public ActionResult user_list()
         {
             DataTable t = getData("select  * from sysUser");
-            return getPagingData(t, start, length) ;
+            return getPagingData(t, start, length);
         }
+
+        [HttpPost]
+        public ActionResult save_user()
+        {
+            var st = Request.Form["savname"];
+            int iID = 0;
+
+
+            if (Request.Form.AllKeys.Contains("id"))
+                iID = Convert.ToInt32(Request.Form["id"]);
+
+            if (string.IsNullOrWhiteSpace(Request.Form["name"]))
+            {
+                return Json(new { msg = "Please specify Name !", result = false }, JsonRequestBehavior.AllowGet);
+            }
+            if (string.IsNullOrWhiteSpace(Request.Form["userid"]))
+            {
+                return Json(new { msg = "Please specify userid !", result = false }, JsonRequestBehavior.AllowGet);
+            }
+            if (string.IsNullOrWhiteSpace(Request.Form["pwd"]))
+            {
+                return Json(new { msg = "Please specify password !", result = false }, JsonRequestBehavior.AllowGet);
+            }
+            if (string.IsNullOrWhiteSpace(Request.Form["email"]))
+            {
+                return Json(new { msg = "Please specify email !", result = false }, JsonRequestBehavior.AllowGet);
+            }
+            if (string.IsNullOrWhiteSpace(Request.Form["mob"]))
+            {
+                return Json(new { msg = "Please specify Mobile number !", result = false }, JsonRequestBehavior.AllowGet);
+            }
+
+
+            string uname = Request.Form["name"];
+            string userid = Request.Form["userid"];
+            string pwd = Request.Form["pwd"];
+            string email = Request.Form["email"];
+            string mob = Request.Form["mob"];
+            string remark = Request.Form["remark"];
+
+            //Duplicate validation
+            DataTable tFile = getData("select * from sysUser where userid = '" + userid + "'");
+
+            if (tFile.Rows.Count > 0)
+            {
+                string sMsg = string.Format("The userid already exists [{0}] !", userid);
+                return Json(new { msg = sMsg, result = false }, JsonRequestBehavior.AllowGet);
+            }
+
+
+            using (SqlConnection conn = new SqlConnection(getConnectionString()))
+            {
+                conn.Open();
+                var cmd = conn.CreateCommand();
+                if (iID == 0)
+                {
+                    cmd.CommandText = "insert into sysUser (uname,userid,email,mobile,pwd,remarks) Values(@uname,@userid,@email,@mobile,@pwd,@remarks)";
+                }
+                else
+                {
+                    cmd.CommandText = "update sysUser set email=@email,mobile=@mobile,pwd=@pwd,remarks=@remarks where id=@id";
+                }
+
+                cmd.Parameters.AddWithValue("@uname", uname);
+                cmd.Parameters.AddWithValue("@userid", userid);
+                cmd.Parameters.AddWithValue("@email", email);
+                cmd.Parameters.AddWithValue("@mobile", mob);
+                cmd.Parameters.AddWithValue("@pwd", pwd);
+                cmd.Parameters.AddWithValue("@remarks", remark);
+                cmd.Parameters.AddWithValue("@id", iID);
+                cmd.ExecuteNonQuery();
+
+            }
+
+
+            return Json(new { msg = "", result = true }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult delete_user()
+        {
+            using (SqlConnection conn = new SqlConnection(getConnectionString()))
+            {
+                conn.Open();
+                var cmd = conn.CreateCommand();
+                int id=Convert.ToInt32(Request.Form["id"]);
+                cmd.CommandText = "delete from sysUser where id=@id";
+
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.ExecuteNonQuery();
+
+            }
+            return Json(new { msg = "", result = true }, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }
