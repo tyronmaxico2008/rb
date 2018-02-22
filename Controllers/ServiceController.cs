@@ -565,6 +565,7 @@ namespace Whirlpool_logistics.Controllers
                         sqlBulkCopy.ColumnMappings.Add("Comment", "Comment");
                         sqlBulkCopy.ColumnMappings.Add("Billing Location", "BillingLocation");
                         sqlBulkCopy.ColumnMappings.Add("Customer Name", "CustomerName");
+                        sqlBulkCopy.ColumnMappings.Add("SAN No", "SANNo");
                         sqlBulkCopy.ColumnMappings.Add("Inventory Adj", "InventoryAdj");
                         sqlBulkCopy.ColumnMappings.Add("SAN A", "SANA");
                         sqlBulkCopy.ColumnMappings.Add("Location", "docLocation");

@@ -121,17 +121,23 @@ namespace Whirlpool_logistics.Controllers
             if (tIndexField.Rows.Count > 0)
             {
                 StringBuilder sbIn = new StringBuilder();
+                List<string> lstOr = new List<string>();
 
-                sbIn.AppendLine("select distinct mFileID  from dbo.vpageIndexData where 1=1 ");
+                sbIn.AppendLine("select distinct mFileID  from dbo.vpageIndexData where 1=1  ");
+
                 foreach (DataRow r in tIndexField.Rows)
                 {
                     if (!string.IsNullOrWhiteSpace(r["val"].ToString()))
                     {
                         //sbIn.AppendFormat(" and subtagid = {0} and val Like '%{1}%' ", r["subtagid"], r["val"].ToString());
-                        sbIn.AppendFormat("  or val Like '%{0}%' ", r["val"].ToString());
+                        lstOr.Add(string.Format("  val Like '%{0}%' ", r["val"].ToString()));
                     }
 
                 }
+
+
+                if (lstOr.Count > 0)
+                    sbIn.AppendFormat(" and ({0})", string.Join(" or ", lstOr.ToArray()));
 
                 sb1.AppendFormat(" and  id in ({0})", sbIn.ToString());
 
@@ -235,7 +241,7 @@ namespace Whirlpool_logistics.Controllers
             {
                 conn.Open();
                 var cmd = conn.CreateCommand();
-                int id=Convert.ToInt32(Request.Form["id"]);
+                int id = Convert.ToInt32(Request.Form["id"]);
                 cmd.CommandText = "delete from sysUser where id=@id";
 
                 cmd.Parameters.AddWithValue("@id", id);
