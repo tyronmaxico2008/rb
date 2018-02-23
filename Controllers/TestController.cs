@@ -21,5 +21,10 @@ namespace Whirlpool_logistics.Controllers
             return View();
         }
 
+        public ActionResult pdf_test()
+        {
+            return View();
+        }
+
     }
 }

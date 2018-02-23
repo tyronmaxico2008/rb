@@ -1,0 +1,52 @@
+
+<div class="row" style="border:1px solid;padding:3px">
+    <div class="col-md-12">
+        <table >
+            <tr>
+                <td>
+                    Total Pages : 
+                </td>
+                <td>
+                    <span class="badge badge-primary" ng-bind="totalPages">0</span>
+                </td>
+                <td>
+                    &nbsp;<button  class="btn btn-warning btn-xs" ng-click="reset()">Reset</button>
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    <a href="javascript:;" ng-click="previous()"><i class="fa fa-arrow-left"></i></a>
+                    &nbsp;<span class="badge badger-danger" ng-bind="currentPage"></span>&nbsp;
+                    <a  href="javascript:;" ng-click="next()"><i class="fa fa-arrow-right"></i></a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div class="row pdfContainer" >
+     
+    <div class="col-md-12" style="text-align: center;background-color: darkgray">
+         <div ng-repeat="tag in drg.tags"  class="drg" ng-style="{ left : tag.x, top : tag.y, width : tag.width,height : tag.height }">
+            <span ng-bind="tag.text"></span>
+        </div>
+       
+       
+        <canvas id="the-canvas" class="pdfViewer">
+           
+        </canvas>
+        
+        
+        <!--
+        <div class="pdfViewer">
+            
+        </div>
+        -->
+    </div>
+</div>pdf

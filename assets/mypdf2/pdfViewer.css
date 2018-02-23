@@ -1,0 +1,20 @@
+.pdfContainer
+{
+    border:1px solid;
+    margin-top: 3px;
+}
+
+.pdfViewer
+{
+    margin-top:30px;
+    cursor:crosshair;
+    width:100%
+}
+
+
+.drg {
+    border : 1px solid red;
+    cursor:    pointer;
+    position: absolute;
+    background-color: yellow;
+}

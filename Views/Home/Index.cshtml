@@ -126,13 +126,13 @@
         </div>
     </div>
 
-    <div class="col-md-8" ng-hide="busy">
+    <div class="col-md-8" >
         <div class="panel panel-default">
             <div class="panel-heading">
                 PDF Viewer For File Boarcode : <span ng-bind="row.FileBarcode"></span>
 
             </div>
-            <div class="panel-body" style="min-height: 400px">
+            <div class="panel-body" style="">
                 <pdf-viewer bar-code="row.FileBarcode" current-page="currentPage" total-pages="totalPages"></pdf-viewer>
             </div>
             <div class="panel-footer">

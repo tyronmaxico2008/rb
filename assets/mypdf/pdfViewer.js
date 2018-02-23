@@ -5,31 +5,20 @@ myApp.directive("pdfViewer", function () {
         restrict: "E"
         , scope: { barCode: "=barCode", currentPage: "=currentPage", totalPages: "=totalPages" }
         , replace: false
-        , templateUrl: '../assets/mypdf/pdfViewer.html' //appConfig.appResourceLink + "/dms/controls/pdfViewer/pdfviewer.html"
+        , templateUrl: '../assets/mypdf/pdfViewer.html?v=1' //appConfig.appResourceLink + "/dms/controls/pdfViewer/pdfviewer.html"
         , controller: function ($scope) {
 
             //variable declaration 
             $scope.currentPage = 1;
             $scope.totalPages = 0
             $scope.error = false;
-            $scope.degree = 90;
 
-            $scope.transform = function () {
-                return " rotate(" + $scope.degree + "deg)";
-            }
-
-            $scope.increase_degree = function () {
-                $scope.degree += 30;
-            }
-            $scope.decrease_degree = function () {
-                $scope.degree -= 30;
-            }
-            //End
+           
             var _pdf = null;
 
             var _loadPDF = function () {
                 if (!$scope.barCode) return;
-                var sLink = "../Service/fetchPDF?fileBarCode=" + $scope.barCode;
+                var sLink = "../Service/fetchPdf?fileBarCode=" + $scope.barCode;
                 PDFJS.getDocument(sLink).then(function (pdf) {
                     // you can now use *pdf* here
                     _pdf = pdf;
@@ -47,16 +36,16 @@ myApp.directive("pdfViewer", function () {
                 }
             });
 
-            $scope.$watch('currentPage', function () {
-                debugger;
-                if ($scope.currentPage > 0) {
-                    _viewPage();
-                }
-            });
+            //$scope.$watch('currentPage', function () {
+            //    debugger;
+            //    if ($scope.currentPage > 0) {
+            //        _viewPage();
+            //    }
+            //});
 
 
             var _viewPage = function () {
-                _pdf.getPage(parseInt($scope.currentPage)).then(function (page) {
+                _pdf.getPage($scope.currentPage).then(function (page) {
                     // you can now use *page* here
                     var scale = 1.5;
                     var viewport = page.getViewport(scale);

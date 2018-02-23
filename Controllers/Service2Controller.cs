@@ -160,7 +160,6 @@ namespace Whirlpool_logistics.Controllers
         [HttpPost]
         public ActionResult save_user()
         {
-            var st = Request.Form["savname"];
             int iID = 0;
 
 
@@ -183,27 +182,24 @@ namespace Whirlpool_logistics.Controllers
             {
                 return Json(new { msg = "Please specify email !", result = false }, JsonRequestBehavior.AllowGet);
             }
-            if (string.IsNullOrWhiteSpace(Request.Form["mob"]))
+            if (string.IsNullOrWhiteSpace(Request.Form["mobile"]))
             {
                 return Json(new { msg = "Please specify Mobile number !", result = false }, JsonRequestBehavior.AllowGet);
             }
 
 
-            string uname = Request.Form["name"];
+            string name = Request.Form["name"];
             string userid = Request.Form["userid"];
             string pwd = Request.Form["pwd"];
             string email = Request.Form["email"];
-            string mob = Request.Form["mob"];
-            string remark = Request.Form["remark"];
-
-            //Duplicate validation
-            DataTable tFile = getData("select * from sysUser where userid = '" + userid + "'");
-
-            if (tFile.Rows.Count > 0)
+            string mob = Request.Form["mobile"];
+            string remarks = Request.Form["remarks"];
+            if (remarks == null)
             {
-                string sMsg = string.Format("The userid already exists [{0}] !", userid);
-                return Json(new { msg = sMsg, result = false }, JsonRequestBehavior.AllowGet);
+                remarks = " ";
             }
+
+
 
 
             using (SqlConnection conn = new SqlConnection(getConnectionString()))
@@ -212,19 +208,27 @@ namespace Whirlpool_logistics.Controllers
                 var cmd = conn.CreateCommand();
                 if (iID == 0)
                 {
-                    cmd.CommandText = "insert into sysUser (uname,userid,email,mobile,pwd,remarks) Values(@uname,@userid,@email,@mobile,@pwd,@remarks)";
+                    //Duplicate validation
+                    DataTable tFile = getData("select * from sysUser where userid = '" + userid + "'");
+
+                    if (tFile.Rows.Count > 0)
+                    {
+                        string sMsg = string.Format("The userid already exists [{0}] !", userid);
+                        return Json(new { msg = sMsg, result = false }, JsonRequestBehavior.AllowGet);
+                    }
+                    cmd.CommandText = "insert into sysUser (name,userid,email,mobile,pwd,remarks) Values(@name,@userid,@email,@mobile,@pwd,@remarks)";
                 }
                 else
                 {
                     cmd.CommandText = "update sysUser set email=@email,mobile=@mobile,pwd=@pwd,remarks=@remarks where id=@id";
                 }
 
-                cmd.Parameters.AddWithValue("@uname", uname);
+                cmd.Parameters.AddWithValue("@name", name);
                 cmd.Parameters.AddWithValue("@userid", userid);
                 cmd.Parameters.AddWithValue("@email", email);
                 cmd.Parameters.AddWithValue("@mobile", mob);
                 cmd.Parameters.AddWithValue("@pwd", pwd);
-                cmd.Parameters.AddWithValue("@remarks", remark);
+                cmd.Parameters.AddWithValue("@remarks", remarks);
                 cmd.Parameters.AddWithValue("@id", iID);
                 cmd.ExecuteNonQuery();
 

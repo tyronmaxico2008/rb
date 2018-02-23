@@ -12,7 +12,7 @@
 
 
     <div class="col-md-12">
-        <button type="button" class="btn btn-default btn-md" data-toggle="modal" data-target="#divSaveEntry" style="float:right">Create User</button>
+        <button type="button" class="btn btn-default btn-md" style="float:right" ng-click="grd.addNew()">Create User</button>
 
         <table class="table table-bordered table-hover">
             <thead>
@@ -59,11 +59,11 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label>Name</label>
-                            <input type="text" class="form-control" ng-model="grd.row.name" readonly="readonly"/>
+                            <input type="text" class="form-control" ng-model="grd.row.name" ng-disabled="grd.row.id !=0"/>
                         </div>
                         <div class="form-group">
                             <label>User ID</label>
-                            <input type="text" class="form-control" ng-model="grd.row.userid" readonly="readonly"/>
+                            <input type="text" class="form-control" ng-model="grd.row.userid" ng-disabled="grd.row.id !=0"/>
                         </div>
                         <div class="form-group">
                             <label>Password</label>
@@ -75,7 +75,7 @@
                         </div>
                         <div class="form-group">
                             <label><i class="fa fa-mobile"></i>&nbsp;Mobile</label>
-                            <input type="tel" class="form-control" ng-model="grd.row.mobile" />
+                            <input type="text" class="form-control" ng-model="grd.row.mobile" Maxlength="10" onkeypress='return event.charCode >= 48 && event.charCode <= 57'/>
                         </div>
                         <div class="form-group">
                             <label>Remarks</label>

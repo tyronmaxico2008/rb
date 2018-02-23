@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+@section  headerContent {
+
+    <script src="~/assets/pdfjs/pdf.js"></script>
+    <script src="~/assets/pdfjs/pdf.worker.js"></script>
+
+    <script src="~/assets/mypdf2/pdfViewer.js"></script>
+    <link href="~/assets/mypdf2/pdfViewer.css" rel="stylesheet" />
+
+    <script src="~/Scripts/pdf_test.js"></script>
+}
+
+
+<div class="row" ng-app="myApp" ng-controller="pdf_test">
+    <div class="col-md-12">
+
+        <input type="text" ng-model="fileid" />
+        <pdf-viewer file-id="fileid"></pdf-viewer>
+
+
+    </div>
+</div>

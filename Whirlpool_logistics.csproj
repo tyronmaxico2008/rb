@@ -163,6 +163,10 @@
     <Content Include="assets\font-awesome\css\font-awesome.css" />
     <Content Include="assets\font-awesome\css\font-awesome.min.css" />
     <Content Include="assets\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="assets\mypdf2\pdfViewer.css" />
+    <Content Include="assets\mypdf2\pdfViewer2.html" />
+    <Content Include="assets\mypdf2\pdfViewer.js" />
+    <Content Include="assets\mypdf\Copy of pdfViewer.html" />
     <Content Include="assets\mypdf\pdfViewer.html" />
     <Content Include="assets\pdfjs\pdf.js" />
     <Content Include="assets\pdfjs\pdf.worker.js" />
@@ -201,6 +205,7 @@
     <Content Include="Scripts\ngCore\ngGRID.js" />
     <Content Include="Scripts\ngCore\pager.html" />
     <Content Include="Scripts\ngInit.js" />
+    <Content Include="Scripts\pdf_test.js" />
     <Content Include="Scripts\report.js" />
     <Content Include="Scripts\test.js" />
     <Content Include="Scripts\user.js" />
@@ -305,6 +310,7 @@
     <Content Include="Views\User\CreateRole.cshtml" />
     <Content Include="Views\User\BulkUpload.cshtml" />
     <Content Include="Views\Home\userReportView.cshtml" />
+    <Content Include="Views\Test\pdf_test.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
