@@ -5,18 +5,19 @@
 
 @section  headerContent {
     <script src="~/Scripts/report.js"></script>
-    
+
 }
 
-    <script>
-        $(function () {
-            $("#frmdatepicker").datepicker({ dateFormat: "yy-mm-dd" });
-            $("#todatepicker").datepicker({ dateFormat: "yy-mm-dd" });
-        });
-    </script>
+<script>
+    $(function () {
+        $("#frmdatepicker").datepicker({ dateFormat: "yy-mm-dd" });
+        $("#todatepicker").datepicker({ dateFormat: "yy-mm-dd" });
+    });
+</script>
 
 <div class="row" ng-app="myApp" ng-controller="report">
     <div class="col-md-12">
+
         <div class="panel panel-primary">
             <div class="panel-heading">
                 Report View
@@ -63,7 +64,7 @@
                             <option>Kolkata</option>
                             <option>Durgapur</option>
                             <option>Raipur</option>
-                            <option>Bhubaneswar</option>
+                            <option>Bhubneshwar</option>
                             <option>Guwahati</option>
                             <option>Patna</option>
                             <option>Ranchi</option>
@@ -83,10 +84,14 @@
 
                     <div class="form-group">
                         <br />
-                        <button class="btn btn-primary" ng-click="fetchReport()">Fetch</button>
+                        <button class="btn btn-primary" ng-click="fetchReport()" ng-disabled="busy">Fetch</button>
                     </div>
+
                 </div>
                 <br />
+                <div style="height: 100%; width: 100%; z-index: 9999; display: block; text-align: center" ng-show="busy">
+                    <img src="~/Images/loading.gif" />
+                </div>
                 @*<b>Report User wise</b>
                 <div style="border: 1px solid #ccc;clear:both;">
                     

@@ -300,8 +300,12 @@ namespace Whirlpool_logistics.Controllers
             }
             try
             {
-                string s = "Select * from vpageIndexData where maintagid='" + Request.Form["maintagid"] + "'and docLocation='" + Request.Form["docLocation"] + "'";
+                var oReport = new bll.clsReport();
+                oReport.Update_LRNo();
+
+                string s = "Select * from vpageIndexData where maintagid='" + Request.Form["maintagid"] + "' and docLocation='" + Request.Form["docLocation"] + "'";
                 DataTable t = getData(s);
+
                 Session["reportData"] = t;
                 if (t.Rows.Count > 0)
                     return Json(new { msg = "", result = true }, JsonRequestBehavior.AllowGet);
@@ -326,6 +330,10 @@ namespace Whirlpool_logistics.Controllers
             }
             try
             {
+                var oReport = new bll.clsReport();
+
+                oReport.Update_LRNo();
+
                 string s = "Select * from vpageIndexData where maintagid='" + Request.Form["maintagid"] + "'and uid='" + Request.Form["uid"] + "'";
                 DataTable t = getData(s);
                 Session["reportData"] = t;
@@ -437,7 +445,7 @@ namespace Whirlpool_logistics.Controllers
             return Content(sResult, "application/json");
         }
 
-        
+
 
 
         [HttpPost]

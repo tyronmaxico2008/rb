@@ -261,57 +261,6 @@
                   </Textbox>
                 </CellContents>
               </TablixCornerCell>
-              <TablixCornerCell>
-                <CellContents>
-                  <Textbox Name="Textbox5">
-                    <CanGrow>true</CanGrow>
-                    <KeepTogether>true</KeepTogether>
-                    <Paragraphs>
-                      <Paragraph>
-                        <TextRuns>
-                          <TextRun>
-                            <Value>LRNo</Value>
-                            <Style>
-                              <FontWeight>Bold</FontWeight>
-                            </Style>
-                          </TextRun>
-                        </TextRuns>
-                        <Style />
-                      </Paragraph>
-                    </Paragraphs>
-                    <rd:DefaultName>Textbox5</rd:DefaultName>
-                    <Style>
-                      <Border>
-                        <Style>Solid</Style>
-                      </Border>
-                      <TopBorder>
-                        <Color>Black</Color>
-                        <Style>Solid</Style>
-                        <Width>1pt</Width>
-                      </TopBorder>
-                      <BottomBorder>
-                        <Color>Black</Color>
-                        <Style>Solid</Style>
-                        <Width>1pt</Width>
-                      </BottomBorder>
-                      <LeftBorder>
-                        <Color>Black</Color>
-                        <Style>Solid</Style>
-                        <Width>1pt</Width>
-                      </LeftBorder>
-                      <RightBorder>
-                        <Color>Black</Color>
-                        <Style>Solid</Style>
-                        <Width>1pt</Width>
-                      </RightBorder>
-                      <PaddingLeft>2pt</PaddingLeft>
-                      <PaddingRight>2pt</PaddingRight>
-                      <PaddingTop>2pt</PaddingTop>
-                      <PaddingBottom>2pt</PaddingBottom>
-                    </Style>
-                  </Textbox>
-                </CellContents>
-              </TablixCornerCell>
             </TablixCornerRow>
           </TablixCornerRows>
         </TablixCorner>
@@ -761,71 +710,7 @@
                                 </CellContents>
                               </TablixHeader>
                               <TablixMembers>
-                                <TablixMember>
-                                  <Group Name="LRNo">
-                                    <GroupExpressions>
-                                      <GroupExpression>=Fields!LRNo.Value</GroupExpression>
-                                    </GroupExpressions>
-                                  </Group>
-                                  <SortExpressions>
-                                    <SortExpression>
-                                      <Value>=Fields!LRNo.Value</Value>
-                                    </SortExpression>
-                                  </SortExpressions>
-                                  <TablixHeader>
-                                    <Size>0.85417in</Size>
-                                    <CellContents>
-                                      <Textbox Name="LRNo">
-                                        <CanGrow>true</CanGrow>
-                                        <KeepTogether>true</KeepTogether>
-                                        <Paragraphs>
-                                          <Paragraph>
-                                            <TextRuns>
-                                              <TextRun>
-                                                <Value>=Fields!LRNo.Value</Value>
-                                                <Style />
-                                              </TextRun>
-                                            </TextRuns>
-                                            <Style />
-                                          </Paragraph>
-                                        </Paragraphs>
-                                        <rd:DefaultName>LRNo</rd:DefaultName>
-                                        <Style>
-                                          <Border>
-                                            <Style>Solid</Style>
-                                          </Border>
-                                          <TopBorder>
-                                            <Color>Black</Color>
-                                            <Style>Solid</Style>
-                                            <Width>1pt</Width>
-                                          </TopBorder>
-                                          <BottomBorder>
-                                            <Color>Black</Color>
-                                            <Style>Solid</Style>
-                                            <Width>1pt</Width>
-                                          </BottomBorder>
-                                          <LeftBorder>
-                                            <Color>Black</Color>
-                                            <Style>Solid</Style>
-                                            <Width>1pt</Width>
-                                          </LeftBorder>
-                                          <RightBorder>
-                                            <Color>Black</Color>
-                                            <Style>Solid</Style>
-                                            <Width>1pt</Width>
-                                          </RightBorder>
-                                          <PaddingLeft>2pt</PaddingLeft>
-                                          <PaddingRight>2pt</PaddingRight>
-                                          <PaddingTop>2pt</PaddingTop>
-                                          <PaddingBottom>2pt</PaddingBottom>
-                                        </Style>
-                                      </Textbox>
-                                    </CellContents>
-                                  </TablixHeader>
-                                  <TablixMembers>
-                                    <TablixMember />
-                                  </TablixMembers>
-                                </TablixMember>
+                                <TablixMember />
                               </TablixMembers>
                             </TablixMember>
                           </TablixMembers>
@@ -843,7 +728,7 @@
         <DataSetName>DataSet1</DataSetName>
         <Top>0.21in</Top>
         <Height>0.42in</Height>
-        <Width>8.32292in</Width>
+        <Width>7.46875in</Width>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -912,7 +797,7 @@
     <DataSource Name="con">
       <ConnectionProperties>
         <DataProvider>SQL</DataProvider>
-        <ConnectString>Data Source=.\sql2012;Initial Catalog=whirlpool_logistics2</ConnectString>
+        <ConnectString>Data Source=.;Initial Catalog=whirlpool_logistics</ConnectString>
       </ConnectionProperties>
       <rd:SecurityType>DataBase</rd:SecurityType>
       <rd:DataSourceID>94b5db8c-a2af-4221-b68d-f0d4d09b4a5f</rd:DataSourceID>
@@ -922,9 +807,8 @@
     <DataSet Name="DataSet1">
       <Query>
         <DataSourceName>con</DataSourceName>
-        <CommandText>SELECT   top 1000     id, mFileID, index_id, val, indexval, subTagName, mainTagName, fileBarCode, imageName, entrydate, docLocation,LRNo
-FROM            vpageIndexData where docLocation='Raipur' and LRNo is not null</CommandText>
-        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+        <CommandText>SELECT        id, mFileID, index_id, val, indexval, subTagName, mainTagName, fileBarCode, imageName, entrydate, docLocation
+FROM            vpageIndexData</CommandText>
       </Query>
       <Fields>
         <Field Name="id">
@@ -969,10 +853,6 @@ FROM            vpageIndexData where docLocation='Raipur' and LRNo is not null</
         </Field>
         <Field Name="docLocation">
           <DataField>docLocation</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="LRNo">
-          <DataField>LRNo</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>

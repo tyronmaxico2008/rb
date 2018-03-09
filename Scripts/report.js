@@ -30,9 +30,13 @@ function report($scope, $http) {
     //    });
     //}
 
-    $scope.fetchReport = function () {
-        var jnPost = { maintagid: $scope.row_filter.mainTag_id, docLocation: $scope.row_filter.docLocation };
+    $scope.busy = false;
 
+    $scope.fetchReport = function () {
+
+
+        var jnPost = { maintagid: $scope.row_filter.mainTag_id, docLocation: $scope.row_filter.docLocation };
+        $scope.busy = true;
         ng_post($http, "../service/setViewData", jnPost, function (data) {
             if (data.result == true) {
                 window.location = "../service/downloadReport";
@@ -40,7 +44,7 @@ function report($scope, $http) {
             else {
                 alert("No data found");
             }
-
+            $scope.busy = false;
         });
     }
 

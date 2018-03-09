@@ -36,12 +36,17 @@ myApp.directive("pdfViewer", function () {
                 }
             });
 
+            $scope.$watch('currentPage', function () {
+                debugger;
+                if ($scope.currentPage > 0) {
+                    _viewPage();
+                }
+            });
+
             //$scope.$watch('currentPage', function () {
-            //    debugger;
-            //    if ($scope.currentPage > 0) {
-            //        _viewPage();
-            //    }
+            //    //alert("Hi");
             //});
+
 
 
             var _viewPage = function () {

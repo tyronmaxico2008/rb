@@ -131,6 +131,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="bll\clsPDF.cs" />
+    <Compile Include="bll\clsReport.cs" />
     <Compile Include="bll\clsSearchDocument.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\myBaseController.cs" />
@@ -211,7 +212,9 @@
     <Content Include="Scripts\user.js" />
     <Content Include="Scripts\viewDoc.js" />
     <Content Include="Scripts\views\docFilter.html" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -296,7 +299,7 @@
     <Content Include="Views\Home\ReportView.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Report\Report1.rdl" />
+    <Content Include="Report\Report1_old.rdl" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\searchDoc.cshtml" />
@@ -311,6 +314,7 @@
     <Content Include="Views\User\BulkUpload.cshtml" />
     <Content Include="Views\Home\userReportView.cshtml" />
     <Content Include="Views\Test\pdf_test.cshtml" />
+    <Content Include="Report\Report1.rdl" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
